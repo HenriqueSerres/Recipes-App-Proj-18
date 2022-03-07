@@ -12,6 +12,10 @@ function Login() {
     return validation;
   }
 
+  const localStorageEmail = {
+    email,
+  };
+
   return (
     <form
       onSubmit={ (e) => e.preventDefault() }
@@ -45,6 +49,11 @@ function Login() {
         data-testid="login-submit-btn"
         type="submit"
         disabled={ !Validations() }
+        onClick={ () => {
+          localStorage.setItem('mealsToken', 1);
+          localStorage.setItem('cocktailsToken', 1);
+          localStorage.setItem('user', JSON.stringify(localStorageEmail));
+        } }
       >
         Enter
       </button>
