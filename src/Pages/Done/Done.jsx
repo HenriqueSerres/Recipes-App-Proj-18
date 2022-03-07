@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 
-function Foods() {
+function Done() {
   return (
     <>
       <Header />
@@ -10,4 +10,4 @@ function Foods() {
   );
 }
 
-export default Foods;
+export default Done;
