@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
 
   function Validations() {
     const SIX = 6;
@@ -53,6 +56,7 @@ function Login() {
           localStorage.setItem('mealsToken', 1);
           localStorage.setItem('cocktailsToken', 1);
           localStorage.setItem('user', JSON.stringify(localStorageEmail));
+          history.push('/foods');
         } }
       >
         Enter
@@ -62,4 +66,13 @@ function Login() {
   );
 }
 
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
 export default Login;
+
+// Material lido para conseguir resolver a 7 https://blog.logrocket.com/storing-retrieving-javascript-objects-localstorage/
+// Uso do hook History https://felixgerschau.com/usehistory-react-hooks/
