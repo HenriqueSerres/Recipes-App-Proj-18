@@ -1,16 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { SearchContext } from '../../context/search';
 
 function SearchBar({ name }) {
   const [searchInput, setSearchInput] = useState('');
   const [radio, setRadio] = useState('');
+  const history = useHistory();
 
   const {
     SearchByIngredient,
     SearchByName,
     SearchByLetter,
     setCurrentPage,
+    recipes,
   } = useContext(SearchContext);
 
   useEffect(() => {
@@ -22,24 +25,35 @@ function SearchBar({ name }) {
     }
   }, [name, setCurrentPage]);
 
-  async function handleSearch() {
+  useEffect(() => {
+    if (recipes.drinks !== undefined && recipes.drinks.length === 1) {
+      console.log(recipes.drinks);
+      history.push(`/drinks/${recipes.drinks[0].idDrink}`);
+    }
+    if (recipes.meals !== undefined && recipes.meals.length === 1) {
+      history.push(`/foods/${recipes.meals[0].idMeal}`);
+    }
+  }, [recipes]);
+
+  function handleSearch() {
     if (radio === 'ingredient') {
-      console.log('ingred');
-      const byIngredient = await SearchByIngredient(searchInput);
-      return byIngredient;
+      SearchByIngredient(searchInput);
     }
     if (radio === 'name') {
-      console.log('nome');
-      return SearchByName(searchInput);
+      SearchByName(searchInput);
     }
     if (radio === 'letter' && searchInput.length === 1) {
-      console.log('letra');
-      return SearchByLetter(searchInput);
+      SearchByLetter(searchInput);
     }
     if (radio === 'letter' && searchInput.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     }
   }
+
+  // function handleRedirect() {
+  //   console.log(recipes.drinks); // verificar se é um array vazio, history.push ,
+
+  // }
 
   return (
     <nav>
@@ -87,8 +101,8 @@ function SearchBar({ name }) {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ async () => {
-          console.log(await handleSearch());
+        onClick={ () => {
+          handleSearch();
         } }
       >
         Search
