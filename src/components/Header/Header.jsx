@@ -27,7 +27,7 @@ function Header({ name, hasIcons }) {
           />
         </button>) : null}
       <span>
-        { showBar === true ? <SearchBar /> : null }
+        { showBar === true ? <SearchBar name={ name } /> : null }
       </span>
     </>
   );

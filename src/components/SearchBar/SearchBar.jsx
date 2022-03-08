@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { SearchContext } from '../../context/search';
 
-function SearchBar() {
+function SearchBar({ name }) {
   const [searchInput, setSearchInput] = useState('');
   const [radio, setRadio] = useState('');
 
@@ -9,7 +10,17 @@ function SearchBar() {
     SearchByIngredient,
     SearchByName,
     SearchByLetter,
+    setCurrentPage,
   } = useContext(SearchContext);
+
+  useEffect(() => {
+    if (name.includes('rink')) {
+      setCurrentPage('thecocktaildb');
+    } // Gambi nossa de cada dia para ignorar o case sensitive do método includes
+    if (name.includes('ood')) {
+      setCurrentPage('themealdb');
+    }
+  }, [name, setCurrentPage]);
 
   async function handleSearch() {
     if (radio === 'ingredient') {
@@ -86,5 +97,9 @@ function SearchBar() {
     </nav>
   );
 }
+
+SearchBar.propTypes = {
+  name: PropTypes.string.isRequired,
+};
 
 export default SearchBar;
