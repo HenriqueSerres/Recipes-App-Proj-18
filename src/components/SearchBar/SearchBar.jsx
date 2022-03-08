@@ -39,7 +39,7 @@ function SearchBar() {
   }
 
   console.log(searchIngredient);
-
+  // Socorro
   return (
     <nav>
       <input
