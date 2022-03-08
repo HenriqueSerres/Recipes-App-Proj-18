@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../../components/Header';
+import { Header } from '../../components';
 
 function Nationalities() {
   return (
     <>
-      <Header />
+      <Header name="Explore Nationalities" hasIcons />
       <div>Recipes</div>
     </>
   );
