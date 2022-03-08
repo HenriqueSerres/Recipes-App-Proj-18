@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../../components/Header';
+import { Header } from '../../components';
 
 function Profile() {
   return (
     <>
-      <Header />
+      <Header name="Profile" hasIcons={ false } />
       <div>Recipes</div>
     </>
   );

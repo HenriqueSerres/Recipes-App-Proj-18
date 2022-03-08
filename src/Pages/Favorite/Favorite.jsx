@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../../components/Header';
+import { Header } from '../../components';
 
 function Favorite() {
   return (
     <>
-      <Header />
+      <Header name="Favorite Recipes" hasIcons={ false } />
       <div>Recipes</div>
     </>
   );
