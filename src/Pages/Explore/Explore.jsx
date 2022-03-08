@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Header } from '../../components';
+import { Header, FooterComponent } from '../../components';
 
 function Explore() {
   return (
@@ -13,6 +13,7 @@ function Explore() {
         <Link to="/explore/drinks">
           <button type="button" data-testid="explore-drinks">Explore Drinks</button>
         </Link>
+        <FooterComponent />
       </div>
     </>
   );
