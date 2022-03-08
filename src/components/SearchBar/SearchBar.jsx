@@ -3,48 +3,37 @@ import { SearchContext } from '../../context/search';
 
 function SearchBar() {
   const [searchInput, setSearchInput] = useState('');
-  const [radioIngredient, setRadioIngredient] = useState(false);
-  const [radioName, setRadioName] = useState(false);
-  const [radioLetter, setRadioLetter] = useState(false);
-  // console.log(radioIngredient);
-  // console.log('name', radioName);
-  // console.log('letter', radioLetter);
+  const [radio, setRadio] = useState('');
+
   const {
-    setIngredient,
-    setName,
-    setLetter,
     SearchByIngredient,
     SearchByName,
     SearchByLetter,
-    letter,
-
-    searchIngredient,
-    // searchLetter,
-    // searchName,
   } = useContext(SearchContext);
 
-  function handleFilters() {
-    if (radioIngredient === true) {
-      return SearchByIngredient();
+  async function handleSearch() {
+    if (radio === 'ingredient') {
+      console.log('ingred');
+      const byIngredient = await SearchByIngredient(searchInput);
+      return byIngredient;
     }
-    if (radioLetter === true && letter.length === 1) {
-      return SearchByLetter();
+    if (radio === 'name') {
+      console.log('nome');
+      return SearchByName(searchInput);
     }
-    if (letter.length > 1) {
-      return global.alert('Your search must have only 1 (one) character');
+    if (radio === 'letter' && searchInput.length === 1) {
+      console.log('letra');
+      return SearchByLetter(searchInput);
     }
-    if (radioName === true) {
-      return SearchByName();
+    if (radio === 'letter' && searchInput.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
     }
   }
 
-  console.log(searchIngredient);
-  // Socorro
   return (
     <nav>
       <input
         name="search-input"
-        label="search-input"
         type="search"
         value={ searchInput }
         onChange={ (e) => {
@@ -58,17 +47,9 @@ function SearchBar() {
         Ingredient
         <input
           name="search-radio"
-          label="ingredient-radio"
           type="radio"
-          value={ radioIngredient }
-          onClick={ () => {
-            setRadioIngredient(!radioIngredient);
-            setIngredient(searchInput);
-            setRadioName(false);
-            setRadioLetter(false);
-          } }
+          onClick={ () => setRadio('ingredient') }
           data-testid="ingredient-search-radio"
-          id="ingredient"
         />
       </label>
 
@@ -76,17 +57,9 @@ function SearchBar() {
         Name
         <input
           name="search-radio"
-          label="name-radio"
           type="radio"
-          value={ radioName }
-          onClick={ () => {
-            setRadioName(!radioName);
-            setName(searchInput);
-            setRadioIngredient(false);
-            setRadioLetter(false);
-          } }
+          onClick={ () => setRadio('name') }
           data-testid="name-search-radio"
-          id="name"
         />
       </label>
 
@@ -94,24 +67,18 @@ function SearchBar() {
         First Letter
         <input
           name="search-radio"
-          label="letter-radio"
           type="radio"
-          value={ radioLetter }
-          onClick={ () => {
-            setRadioLetter(!radioLetter);
-            setLetter(searchInput);
-            setRadioName(false);
-            setRadioIngredient(false);
-          } }
+          onClick={ () => setRadio('letter') }
           data-testid="first-letter-search-radio"
-          id="letter"
         />
       </label>
 
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ () => console.log(handleFilters()) }
+        onClick={ async () => {
+          console.log(await handleSearch());
+        } }
       >
         Search
       </button>

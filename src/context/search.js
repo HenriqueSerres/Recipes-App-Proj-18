@@ -6,36 +6,42 @@ export const SearchContext = createContext();
 SearchContext.displayName = 'Search'; // isso aqui serve para aparecer com o nome correto na extenção do navegador para context
 
 export function SearchProvider({ children }) {
-  const [ingredient, setIngredient] = useState('');
+//   const [ingredient, setIngredient] = useState('');
   const [searchIngredient, setSearchIngredient] = useState();
-  const [name, setName] = useState('');
+  //   const [name, setName] = useState('');
   const [searchName, setSearchName] = useState();
-  const [letter, setLetter] = useState('');
+  //   const [letter, setLetter] = useState('');
   const [searchLetter, setSearchLetter] = useState('');
 
-  async function SearchByIngredient() {
+  async function SearchByIngredient(ingredient) {
+    console.log(ingredient);
     const result = await fetchIngredients(ingredient);
     setSearchIngredient(result);
+    return result;
   }
 
-  async function SearchByName() {
+  async function SearchByName(name) {
     const result = await fetchName(name);
     setSearchName(result);
+    return result;
   }
 
-  async function SearchByLetter() {
+  async function SearchByLetter(letter) {
     const result = await fetchFirstLetter(letter);
     setSearchLetter(result);
+    return result;
   }
 
   const context = {
-    setIngredient,
-    setName,
-    setLetter,
+    // setIngredient,
+    // setName,
+    // setLetter,
     SearchByIngredient,
     SearchByName,
     SearchByLetter,
-    letter,
+    // letter,
+    // name,
+    // ingredient,
 
     searchIngredient,
     searchLetter,
