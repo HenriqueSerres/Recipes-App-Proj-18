@@ -1,19 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { SearchContext } from '../../context/search';
 
 function SearchBar() {
   const [searchInput, setSearchInput] = useState('');
-  const [radioIngredient, setRadioIngredient] = useState();
-  const [radioName, setRadioName] = useState();
-  const [radioLetter, setRadioLetter] = useState();
+  const [radioIngredient, setRadioIngredient] = useState(false);
+  const [radioName, setRadioName] = useState(false);
+  const [radioLetter, setRadioLetter] = useState(false);
+  // console.log(radioIngredient);
+  // console.log('name', radioName);
+  // console.log('letter', radioLetter);
+  const {
+    setIngredient,
+    setName,
+    setLetter,
+    SearchByIngredient,
+    SearchByName,
+    SearchByLetter,
+    letter,
+
+    searchIngredient,
+    // searchLetter,
+    // searchName,
+  } = useContext(SearchContext);
+
+  function handleFilters() {
+    if (radioIngredient === true) {
+      return SearchByIngredient();
+    }
+    if (radioLetter === true && letter.length === 1) {
+      return SearchByLetter();
+    }
+    if (letter.length > 1) {
+      return global.alert('Your search must have only 1 (one) character');
+    }
+    if (radioName === true) {
+      return SearchByName();
+    }
+  }
+
+  console.log(searchIngredient);
 
   return (
-    <nav style={ { display: 'flex' } }>
+    <nav>
       <input
         name="search-input"
         label="search-input"
         type="search"
         value={ searchInput }
-        onChange={ (e) => setSearchInput(e.target.value) }
+        onChange={ (e) => {
+          setSearchInput(e.target.value);
+        } }
         placeholder="Search for a recipe..."
         data-testid="search-input"
       />
@@ -25,7 +61,12 @@ function SearchBar() {
           label="ingredient-radio"
           type="radio"
           value={ radioIngredient }
-          onClick={ setRadioIngredient }
+          onClick={ () => {
+            setRadioIngredient(!radioIngredient);
+            setIngredient(searchInput);
+            setRadioName(false);
+            setRadioLetter(false);
+          } }
           data-testid="ingredient-search-radio"
           id="ingredient"
         />
@@ -38,7 +79,12 @@ function SearchBar() {
           label="name-radio"
           type="radio"
           value={ radioName }
-          onClick={ setRadioName }
+          onClick={ () => {
+            setRadioName(!radioName);
+            setName(searchInput);
+            setRadioIngredient(false);
+            setRadioLetter(false);
+          } }
           data-testid="name-search-radio"
           id="name"
         />
@@ -51,13 +97,22 @@ function SearchBar() {
           label="letter-radio"
           type="radio"
           value={ radioLetter }
-          onClick={ setRadioLetter }
+          onClick={ () => {
+            setRadioLetter(!radioLetter);
+            setLetter(searchInput);
+            setRadioName(false);
+            setRadioIngredient(false);
+          } }
           data-testid="first-letter-search-radio"
           id="letter"
         />
       </label>
 
-      <button type="button" data-testid="exec-search-btn">
+      <button
+        type="button"
+        data-testid="exec-search-btn"
+        onClick={ () => console.log(handleFilters()) }
+      >
         Search
       </button>
 

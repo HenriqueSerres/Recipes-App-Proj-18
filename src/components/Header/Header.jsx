@@ -7,7 +7,6 @@ import SearchBar from '../SearchBar/SearchBar';
 
 function Header({ name, hasIcons }) {
   const [showBar, setShowBar] = useState(false);
-  console.log(showBar);
   return (
     <>
       <Link
