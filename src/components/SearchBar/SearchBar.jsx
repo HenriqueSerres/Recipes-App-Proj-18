@@ -7,7 +7,7 @@ function SearchBar() {
   const [radioLetter, setRadioLetter] = useState();
 
   return (
-    <nav>
+    <nav style={ { display: 'flex' } }>
       <input
         name="search-input"
         label="search-input"
