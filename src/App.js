@@ -16,25 +16,27 @@ import {
   Favorite,
   RecipeDetails,
 } from './Pages';
+import { SearchProvider } from './context/search';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/foods" component={ Foods } />
-        <Route exact path="/drinks" component={ Drinks } />
-        <Route exact path="/explore" component={ Explore } />
-        <Route exact path="/explore/foods" component={ ExploreFoods } />
-        <Route exact path="/explore/drinks" component={ ExploreDrinks } />
-        <Route exact path="/explore/foods/ingredients" component={ FoodsIngredients } />
-        <Route exact path="/explore/drinks/ingredients" component={ DrinksIngredients } />
-        <Route exact path="/explore/foods/nationalities" component={ Nationalities } />
-        <Route exact path="/profile" component={ Profile } />
-        <Route exact path="/done-recipes" component={ Done } />
-        <Route exact path="/favorite-recipes" component={ Favorite } />
-        <Route exact path="/foods/:idReceita" component={ RecipeDetails } />
-        <Route exact path="/drinks/:idReceita" component={ RecipeDetails } />
+        <SearchProvider>
+          <Route path="/foods" component={ Foods } />
+          <Route path="/drinks" component={ Drinks } />
+          <Route exact path="/explore" component={ Explore } />
+          <Route path="/explore/foods" component={ ExploreFoods } />
+          <Route path="/explore/drinks" component={ ExploreDrinks } />
+          <Route path="/explore/foods/ingredients" component={ FoodsIngredients } />
+          <Route path="/explore/drinks/ingredients" component={ DrinksIngredients } />
+          <Route path="/explore/foods/nationalities" component={ Nationalities } />
+          <Route path="/profile" component={ Profile } />
+          <Route path="/done-recipes" component={ Done } />
+          <Route path="/favorite-recipes" component={ Favorite } />
+        </SearchProvider>
+
       </Switch>
     </BrowserRouter>
   );
