@@ -10,21 +10,25 @@ function CategButtons({ name }) {
     drinkCategs,
     SearchFoodRecipeByCategory,
     SearchDrinkRecipeByCategory,
+    toggleCateg,
+    setToggleCateg,
   } = useContext(SearchContext);
   const FIVE = 5;
 
   useEffect(() => {
     getFoodCateg();
     getDrinkCateg();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleClick(categoryName) {
     if (name.includes('rink')) {
-      SearchDrinkRecipeByCategory(categoryName);
+      setToggleCateg(categoryName);
+      SearchDrinkRecipeByCategory(categoryName, toggleCateg);
     }
     if (name.includes('ood')) {
-      SearchFoodRecipeByCategory(categoryName);
+      setToggleCateg(categoryName);
+      SearchFoodRecipeByCategory(categoryName, toggleCateg);
     }
   }
 
@@ -38,7 +42,9 @@ function CategButtons({ name }) {
               key={ category.strCategory }
               index={ index }
               data-testid={ `${category.strCategory}-category-filter` }
-              onClick={ () => handleClick(category.strCategory) }
+              onClick={ () => {
+                handleClick(category.strCategory);
+              } }
             >
               { category.strCategory }
             </button>

@@ -21,6 +21,7 @@ export function SearchProvider({ children }) {
   const [allDrinks, setAllDrinks] = useState([]);
   const [foodCategs, setFoodCategs] = useState([]);
   const [drinkCategs, setDrinkCategs] = useState([]);
+  const [toggleCateg, setToggleCateg] = useState('');
 
   const error = 'Sorry, we haven\'t found any recipes for these filters.';
 
@@ -71,14 +72,26 @@ export function SearchProvider({ children }) {
     setDrinkCategs(result);
   }
 
-  async function SearchFoodRecipeByCategory(category) {
-    const result = await fetchFoodCategRecipes(category);
-    setRecipes(result);
+  async function SearchFoodRecipeByCategory(category, prevCategory) {
+    if (prevCategory === category) {
+      getAllMeals();
+      setToggleCateg('');
+    }
+    if (prevCategory !== category) {
+      const result = await fetchFoodCategRecipes(category);
+      setRecipes(result);
+    }
   }
 
-  async function SearchDrinkRecipeByCategory(category) {
-    const result = await fetchDrinkCategRecipes(category);
-    setRecipes(result);
+  async function SearchDrinkRecipeByCategory(category, prevCategory) {
+    if (prevCategory === category) {
+      getAllDrinks();
+      setToggleCateg('');
+    }
+    if (prevCategory !== category) {
+      const result = await fetchDrinkCategRecipes(category);
+      setRecipes(result);
+    }
   }
 
   const context = {
@@ -97,6 +110,8 @@ export function SearchProvider({ children }) {
     drinkCategs,
     SearchFoodRecipeByCategory,
     SearchDrinkRecipeByCategory,
+    toggleCateg,
+    setToggleCateg,
   };
 
   return (
