@@ -12,7 +12,6 @@ export function SearchProvider({ children }) {
   async function SearchByIngredient(ingredient) {
     const result = await fetchIngredients(ingredient, currentPage);
     setRecipes(result);
-    console.log('é o result', result);
   }
 
   async function SearchByName(name) {
