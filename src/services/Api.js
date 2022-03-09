@@ -36,12 +36,27 @@ export const fetchAllDrinks = async () => {
 export const fetchFoodCateg = async () => {
   const ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const response = await fetch(ENDPOINT);
+  console.log('response de categ foods', response);
   const result = await response.json();
   return result;
 };
 
 export const fetchDrinkCateg = async () => {
   const ENDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
+  const response = await fetch(ENDPOINT);
+  const result = await response.json();
+  return result;
+};
+
+export const fetchFoodCategRecipes = async (category) => {
+  const ENDPOINT = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`;
+  const response = await fetch(ENDPOINT);
+  const result = await response.json();
+  return result;
+};
+
+export const fetchDrinkCategRecipes = async (category) => {
+  const ENDPOINT = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
   const response = await fetch(ENDPOINT);
   const result = await response.json();
   return result;
