@@ -36,7 +36,6 @@ export const fetchAllDrinks = async () => {
 export const fetchFoodCateg = async () => {
   const ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
   const response = await fetch(ENDPOINT);
-  console.log('response de categ foods', response);
   const result = await response.json();
   return result;
 };

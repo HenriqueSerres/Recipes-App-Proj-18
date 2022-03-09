@@ -8,13 +8,14 @@ function Foods() {
     recipes,
     allMeals,
     getAllMeals,
+    toggleCateg,
   } = useContext(SearchContext);
   const TWELVE = 12;
 
   useEffect(() => {
     getAllMeals();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // se eu coloco a dependencia, ele fica fazendo 30 mil requisições e talves eu tome block da api de isso continuar
+  }, []); // se eu coloco a dependencia, ele entra em um loop infinito, não mexer.
 
   function handleRender(array) {
     if (array !== undefined) {
@@ -39,7 +40,8 @@ function Foods() {
       <CategButtons name="Foods" />
       <main>
         {recipes.meals !== undefined
-        && recipes.meals.length >= 1 ? handleRender(recipes.meals)
+        && recipes.meals.length >= 1
+        && toggleCateg.length > 0 ? handleRender(recipes.meals)
           : handleRender(allMeals.meals)}
 
       </main>

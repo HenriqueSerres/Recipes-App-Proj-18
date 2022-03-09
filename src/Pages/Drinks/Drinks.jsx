@@ -8,6 +8,7 @@ function Drinks() {
     recipes,
     allDrinks,
     getAllDrinks,
+    toggleCateg,
   } = useContext(SearchContext);
   const TWELVE = 12;
 
@@ -39,7 +40,8 @@ function Drinks() {
       <CategButtons name="Drinks" />
       <main>
         {recipes.drinks !== undefined
-        && recipes.drinks.length >= 1 ? handleRender(recipes.drinks)
+        && recipes.drinks.length >= 1
+        && toggleCateg.length > 0 ? handleRender(recipes.drinks)
           : handleRender(allDrinks.drinks)}
       </main>
       <Footer />
