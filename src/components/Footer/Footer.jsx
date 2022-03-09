@@ -5,7 +5,7 @@ import exploreIcon from '../../images/exploreIcon.svg';
 import mealIcon from '../../images/mealIcon.svg';
 import style from './footer.module.css';
 
-function FooterComponent() {
+function Footer() {
   return (
     <footer
       className={ style.footerClass }
@@ -30,4 +30,4 @@ function FooterComponent() {
   );
 }
 
-export default FooterComponent;
+export default Footer;

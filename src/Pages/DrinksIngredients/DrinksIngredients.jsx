@@ -1,12 +1,12 @@
 import React from 'react';
-import { Header, FooterComponent } from '../../components';
+import { Header, Footer } from '../../components';
 
 function DrinksIngredients() {
   return (
     <>
       <Header name="Explore Ingredients" hasIcons={ false } />
       <div>Recipes</div>
-      <FooterComponent />
+      <Footer />
     </>
   );
 }
