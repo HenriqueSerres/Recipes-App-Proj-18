@@ -1,6 +1,11 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fetchIngredients, fetchName, fetchFirstLetter } from '../services/Api';
+import {
+  fetchIngredients,
+  fetchName,
+  fetchFirstLetter,
+  fetchAllMeals,
+  fetchAllDrinks } from '../services/Api';
 
 export const SearchContext = createContext();
 SearchContext.displayName = 'Search'; // isso aqui serve para aparecer com o nome correto na extenção do navegador para context
@@ -8,6 +13,8 @@ SearchContext.displayName = 'Search'; // isso aqui serve para aparecer com o nom
 export function SearchProvider({ children }) {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState('');
+  const [allMeals, setAllMeals] = useState([]);
+  const [allDrinks, setAllDrinks] = useState([]);
   const error = 'Sorry, we haven\'t found any recipes for these filters.';
 
   async function SearchByIngredient(ingredient) {
@@ -37,12 +44,26 @@ export function SearchProvider({ children }) {
     setRecipes(result);
   }
 
+  async function getAllMeals() {
+    const result = await fetchAllMeals();
+    setAllMeals(result);
+  }
+
+  async function getAllDrinks() {
+    const result = await fetchAllDrinks();
+    setAllDrinks(result);
+  }
+
   const context = {
     SearchByIngredient,
     SearchByName,
     SearchByLetter,
     setCurrentPage,
     recipes,
+    allMeals,
+    getAllMeals,
+    allDrinks,
+    getAllDrinks,
   };
 
   return (

@@ -18,3 +18,17 @@ export const fetchFirstLetter = async (letter, currentPage) => {
   const result = await response.json();
   return result;
 };
+
+export const fetchAllMeals = async () => {
+  const ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const response = await fetch(ENDPOINT);
+  const result = await response.json();
+  return result;
+};
+
+export const fetchAllDrinks = async () => {
+  const ENDPOINT = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const response = await fetch(ENDPOINT);
+  const result = await response.json();
+  return result;
+};
