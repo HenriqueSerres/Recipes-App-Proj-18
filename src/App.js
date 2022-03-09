@@ -14,11 +14,12 @@ import {
   Profile,
   Done,
   Favorite,
-  RecipeDetails,
+  // RecipeDetails, comentando porque sem rota ele dá erro!
 } from './Pages';
 import { SearchProvider } from './context/search';
 
 function App() {
+  // O EXACT só precisa estar no caminho raíz
   return (
     <BrowserRouter>
       <Switch>
