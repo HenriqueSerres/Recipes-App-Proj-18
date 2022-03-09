@@ -39,7 +39,7 @@ function Drinks() {
       <CategButtons name="Drinks" />
       <main>
         {recipes.drinks !== undefined
-        && recipes.drinks.length > 1 ? handleRender(recipes.drinks)
+        && recipes.drinks.length >= 1 ? handleRender(recipes.drinks)
           : handleRender(allDrinks.drinks)}
       </main>
       <Footer />

@@ -8,6 +8,8 @@ function CategButtons({ name }) {
     foodCategs,
     getDrinkCateg,
     drinkCategs,
+    SearchFoodRecipeByCategory,
+    SearchDrinkRecipeByCategory,
   } = useContext(SearchContext);
   const FIVE = 5;
 
@@ -17,8 +19,16 @@ function CategButtons({ name }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function handleClick(categoryName) {
+    if (name.includes('rink')) {
+      SearchDrinkRecipeByCategory(categoryName);
+    }
+    if (name.includes('ood')) {
+      SearchFoodRecipeByCategory(categoryName);
+    }
+  }
+
   function handleRender(categories) {
-    console.log(categories);
     if (categories !== undefined) {
       return categories.map((category, index) => {
         if (index < FIVE) {
@@ -28,6 +38,7 @@ function CategButtons({ name }) {
               key={ category.strCategory }
               index={ index }
               data-testid={ `${category.strCategory}-category-filter` }
+              onClick={ () => handleClick(category.strCategory) }
             >
               { category.strCategory }
             </button>
