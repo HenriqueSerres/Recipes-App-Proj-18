@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Header, FooterComponent } from '../../components';
+import { Header, Footer } from '../../components';
 
 function Profile() {
   const [email, setEmail] = useState('');
@@ -36,7 +36,7 @@ function Profile() {
           </button>
         </Link>
       </div>
-      <FooterComponent />
+      <Footer />
     </>
   );
 }
