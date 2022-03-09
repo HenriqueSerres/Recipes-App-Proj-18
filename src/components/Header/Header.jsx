@@ -7,7 +7,6 @@ import SearchBar from '../SearchBar/SearchBar';
 
 function Header({ name, hasIcons }) {
   const [showBar, setShowBar] = useState(false);
-  console.log(showBar);
   return (
     <>
       <Link
@@ -28,7 +27,7 @@ function Header({ name, hasIcons }) {
           />
         </button>) : null}
       <span>
-        { showBar === true ? <SearchBar /> : null }
+        { showBar === true ? <SearchBar name={ name } /> : null }
       </span>
     </>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Header } from '../../components';
+import { Header, Footer } from '../../components';
 
 function ExploreFoods() {
   return (
@@ -30,6 +30,7 @@ function ExploreFoods() {
           Surprise me!
         </button>
       </div>
+      <Footer />
     </>
   );
 }

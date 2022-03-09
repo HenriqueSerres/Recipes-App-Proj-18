@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Header } from '../../components';
+import { Header, Footer } from '../../components';
 
 function ExploreDrinks() {
   return (
@@ -22,6 +22,7 @@ function ExploreDrinks() {
           Surprise me!
         </button>
       </div>
+      <Footer />
     </>
   );
 }

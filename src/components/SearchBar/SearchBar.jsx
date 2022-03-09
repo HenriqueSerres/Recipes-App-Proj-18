@@ -1,19 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import { SearchContext } from '../../context/search';
 
-function SearchBar() {
+function SearchBar({ name }) {
   const [searchInput, setSearchInput] = useState('');
-  const [radioIngredient, setRadioIngredient] = useState();
-  const [radioName, setRadioName] = useState();
-  const [radioLetter, setRadioLetter] = useState();
+  const [radio, setRadio] = useState('');
+  const history = useHistory();
+
+  const {
+    SearchByIngredient,
+    SearchByName,
+    SearchByLetter,
+    setCurrentPage,
+    recipes,
+  } = useContext(SearchContext);
+
+  useEffect(() => {
+    if (name.includes('rink')) {
+      setCurrentPage('thecocktaildb');
+    } // Gambi nossa de cada dia para ignorar o case sensitive do método includes
+    if (name.includes('ood')) {
+      setCurrentPage('themealdb');
+    }
+  }, [name, setCurrentPage]);
+
+  useEffect(() => {
+    if (recipes.drinks !== undefined && recipes.drinks.length === 1) {
+      history.push(`/drinks/${recipes.drinks[0].idDrink}`);
+    }
+    if (recipes.meals !== undefined && recipes.meals.length === 1) {
+      history.push(`/foods/${recipes.meals[0].idMeal}`);
+    }
+  }, [recipes, history]);
+
+  function handleSearch() {
+    if (radio === 'ingredient') {
+      SearchByIngredient(searchInput);
+    }
+    if (radio === 'name') {
+      SearchByName(searchInput);
+    }
+    if (radio === 'letter' && searchInput.length === 1) {
+      SearchByLetter(searchInput);
+    }
+    if (radio === 'letter' && searchInput.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+    }
+  }
 
   return (
-    <nav style={ { display: 'flex' } }>
+    <nav>
       <input
         name="search-input"
-        label="search-input"
         type="search"
         value={ searchInput }
-        onChange={ (e) => setSearchInput(e.target.value) }
+        onChange={ (e) => {
+          setSearchInput(e.target.value);
+        } }
         placeholder="Search for a recipe..."
         data-testid="search-input"
       />
@@ -22,12 +66,9 @@ function SearchBar() {
         Ingredient
         <input
           name="search-radio"
-          label="ingredient-radio"
           type="radio"
-          value={ radioIngredient }
-          onClick={ setRadioIngredient }
+          onClick={ () => setRadio('ingredient') }
           data-testid="ingredient-search-radio"
-          id="ingredient"
         />
       </label>
 
@@ -35,12 +76,9 @@ function SearchBar() {
         Name
         <input
           name="search-radio"
-          label="name-radio"
           type="radio"
-          value={ radioName }
-          onClick={ setRadioName }
+          onClick={ () => setRadio('name') }
           data-testid="name-search-radio"
-          id="name"
         />
       </label>
 
@@ -48,21 +86,28 @@ function SearchBar() {
         First Letter
         <input
           name="search-radio"
-          label="letter-radio"
           type="radio"
-          value={ radioLetter }
-          onClick={ setRadioLetter }
+          onClick={ () => setRadio('letter') }
           data-testid="first-letter-search-radio"
-          id="letter"
         />
       </label>
 
-      <button type="button" data-testid="exec-search-btn">
+      <button
+        type="button"
+        data-testid="exec-search-btn"
+        onClick={ () => {
+          handleSearch();
+        } }
+      >
         Search
       </button>
 
     </nav>
   );
 }
+
+SearchBar.propTypes = {
+  name: PropTypes.string.isRequired,
+};
 
 export default SearchBar;
