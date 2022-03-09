@@ -32,7 +32,7 @@ function SearchBar({ name }) {
     if (recipes.meals !== undefined && recipes.meals.length === 1) {
       history.push(`/foods/${recipes.meals[0].idMeal}`);
     }
-  }, [recipes]); // pelo amor do DEUS não mexe nisso...
+  }, [recipes, history]); // pelo amor do DEUS não mexe nisso...
 
   function handleSearch() {
     if (radio === 'ingredient') {
