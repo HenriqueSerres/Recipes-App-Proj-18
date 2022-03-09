@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Header, Footer, CategButtons } from '../../components';
 import { SearchContext } from '../../context/search';
 import Food from './Food/Food';
@@ -22,11 +23,13 @@ function Foods() {
       return array.map((meal, index) => {
         if (index < TWELVE) {
           return (
-            <Food
-              meal={ meal }
-              key={ meal.idMeal }
-              index={ index }
-            />
+            <Link to={ `/foods/${meal.idMeal}` }>
+              <Food
+                meal={ meal }
+                key={ meal.idMeal }
+                index={ index }
+              />
+            </Link>
           );
         }
         return null;
