@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Header, Footer } from '../../components';
+import { Header, Footer, CategButtons } from '../../components';
 import { SearchContext } from '../../context/search';
 import Drink from './Drink/Drink';
 
@@ -10,8 +10,6 @@ function Drinks() {
     getAllDrinks,
   } = useContext(SearchContext);
   const TWELVE = 12;
-
-  console.log(allDrinks);
 
   useEffect(() => {
     getAllDrinks();
@@ -38,6 +36,7 @@ function Drinks() {
   return (
     <>
       <Header name="Drinks" hasIcons />
+      <CategButtons name="Drinks" />
       <main>
         {recipes.drinks !== undefined
         && recipes.drinks.length > 1 ? handleRender(recipes.drinks)
