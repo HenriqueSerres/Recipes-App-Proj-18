@@ -14,6 +14,7 @@ import {
   Profile,
   Done,
   Favorite,
+  RecipeDetails,
 } from './Pages';
 import { SearchProvider } from './context/search';
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/done-recipes" component={ Done } />
           <Route path="/favorite-recipes" component={ Favorite } />
         </SearchProvider>
+
       </Switch>
     </BrowserRouter>
   );

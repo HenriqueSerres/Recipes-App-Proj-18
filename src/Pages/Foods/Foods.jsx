@@ -1,7 +1,9 @@
+
 import React, { useContext } from 'react';
-import { Header } from '../../components';
+import { Header, FooterComponent } from '../../components';
 import { SearchContext } from '../../context/search';
 import Food from './Food/Food';
+
 
 function Foods() {
   const {
@@ -27,6 +29,7 @@ function Foods() {
             return null;
           }) : null }
       </main>
+      <FooterComponent />
     </>
   );
 }

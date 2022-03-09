@@ -1,5 +1,6 @@
+
 import React, { useContext } from 'react';
-import { Header } from '../../components';
+import { Header, FooterComponent } from '../../components';
 import { SearchContext } from '../../context/search';
 import Drink from './Drink/Drink';
 
@@ -27,6 +28,7 @@ function Drinks() {
             return null;
           }) : null }
       </main>
+      <FooterComponent />
     </>
   );
 }
