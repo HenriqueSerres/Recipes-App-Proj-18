@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, FooterComponent } from '../../components';
+import { Header, Footer } from '../../components';
 
 function RecipeDetails() {
   const img = 'https://maringa.cidadecancao.com/media/catalog/product/cache/1/image/855x635/9df78eab33525d08d6e5fb8d27136e95/b/a/batata-extra-kg-0000000028417.jpg';
@@ -31,7 +31,7 @@ function RecipeDetails() {
         {/* <h1 data-testid="${index}-recomendation-card">card recomendado</h1> */}
         card recomendado
       </section>
-      <FooterComponent />
+      <Footer />
     </>
   );
 }

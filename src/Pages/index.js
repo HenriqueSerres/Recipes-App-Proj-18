@@ -10,6 +10,6 @@ export { default as Nationalities } from './Nationalities/Nationalities';
 export { default as Profile } from './Profile/Profile';
 export { default as Done } from './Done/Done';
 export { default as Favorite } from './Favorite/Favorite';
-export { default as RecipeDetails } from './Recipe Details/Recipe Details';
+export { default as RecipeDetails } from './RecipeDetails/RecipeDetails';
 
 // Esse tipo de exportação faz com que o caminho não fique repetido onde for importado.
