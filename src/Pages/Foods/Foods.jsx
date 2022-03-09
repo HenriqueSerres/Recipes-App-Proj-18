@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Header, Footer } from '../../components';
+import { Header, Footer, CategButtons } from '../../components';
 import { SearchContext } from '../../context/search';
 import Food from './Food/Food';
 
@@ -36,6 +36,7 @@ function Foods() {
   return (
     <>
       <Header name="Foods" hasIcons />
+      <CategButtons name="Foods" />
       <main>
         {recipes.meals !== undefined
         && recipes.meals.length > 1 ? handleRender(recipes.meals)
