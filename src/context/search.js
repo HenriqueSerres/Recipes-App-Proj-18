@@ -73,22 +73,22 @@ export function SearchProvider({ children }) {
   }
 
   async function SearchFoodRecipeByCategory(category, prevCategory) {
-    if (prevCategory === category) {
+    if (prevCategory === category || category === 'all') {
       getAllMeals();
       setToggleCateg('');
     }
-    if (prevCategory !== category) {
+    if (prevCategory !== category && category !== 'all') {
       const result = await fetchFoodCategRecipes(category);
       setRecipes(result);
     }
   }
 
   async function SearchDrinkRecipeByCategory(category, prevCategory) {
-    if (prevCategory === category) {
+    if (prevCategory === category || category === 'all') {
       getAllDrinks();
       setToggleCateg('');
     }
-    if (prevCategory !== category) {
+    if (prevCategory !== category && category !== 'all') {
       const result = await fetchDrinkCategRecipes(category);
       setRecipes(result);
     }

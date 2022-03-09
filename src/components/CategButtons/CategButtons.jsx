@@ -34,24 +34,35 @@ function CategButtons({ name }) {
 
   function handleRender(categories) {
     if (categories !== undefined) {
-      return categories.map((category, index) => {
-        if (index < FIVE) {
-          return (
-            <button
-              type="button"
-              key={ category.strCategory }
-              index={ index }
-              data-testid={ `${category.strCategory}-category-filter` }
-              onClick={ () => {
-                handleClick(category.strCategory);
-              } }
-            >
-              { category.strCategory }
-            </button>
-          );
-        }
-        return null;
-      });
+      return (
+        <>
+          <button
+            type="button"
+            data-testid="All-category-filter"
+            onClick={ () => handleClick('all') }
+          >
+            All
+          </button>
+          {categories.map((category, index) => {
+            if (index < FIVE) {
+              return (
+                <button
+                  type="button"
+                  key={ category.strCategory }
+                  index={ index }
+                  data-testid={ `${category.strCategory}-category-filter` }
+                  onClick={ () => {
+                    handleClick(category.strCategory);
+                  } }
+                >
+                  { category.strCategory }
+                </button>
+              );
+            }
+            return null;
+          })}
+
+        </>);
     }
   }
 
@@ -60,7 +71,7 @@ function CategButtons({ name }) {
       {name === 'Drinks'
       && drinkCategs.drinks !== undefined
         ? handleRender(drinkCategs.drinks)
-        : handleRender(foodCategs.meals)}
+        : (handleRender(foodCategs.meals))}
     </nav>
   );
 }
