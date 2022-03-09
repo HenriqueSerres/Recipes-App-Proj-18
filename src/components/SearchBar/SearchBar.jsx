@@ -27,13 +27,12 @@ function SearchBar({ name }) {
 
   useEffect(() => {
     if (recipes.drinks !== undefined && recipes.drinks.length === 1) {
-      console.log(recipes.drinks);
       history.push(`/drinks/${recipes.drinks[0].idDrink}`);
     }
     if (recipes.meals !== undefined && recipes.meals.length === 1) {
       history.push(`/foods/${recipes.meals[0].idMeal}`);
     }
-  }, [recipes]);
+  }, [recipes]); // pelo amor do DEUS não mexe nisso...
 
   function handleSearch() {
     if (radio === 'ingredient') {
@@ -49,11 +48,6 @@ function SearchBar({ name }) {
       global.alert('Your search must have only 1 (one) character');
     }
   }
-
-  // function handleRedirect() {
-  //   console.log(recipes.drinks); // verificar se é um array vazio, history.push ,
-
-  // }
 
   return (
     <nav>

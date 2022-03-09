@@ -8,7 +8,7 @@ function Foods() {
     recipes,
   } = useContext(SearchContext);
   const TWELVE = 12;
-
+  console.log(recipes);
   return (
     <>
       <Header name="Foods" hasIcons />
