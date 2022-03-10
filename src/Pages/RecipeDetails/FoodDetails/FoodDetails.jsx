@@ -4,14 +4,14 @@ import shareIcon from '../../../images/shareIcon.svg';
 import favorite from '../../../images/whiteHeartIcon.svg';
 import getIngredientsArray from '../../../helpers/IngredientsFunc';
 import getIngredientMeasure from '../../../helpers/MeasureFunc';
-import { handleRender6Meals } from '../../../helpers/HandleFoodRenders';
+import { handleRender6Drinks } from '../../../helpers/HandleDrinkRenders';
 
 function FoodDetails() {
   const {
     meal,
     getOneMeal,
-    allMeals,
-    getAllMeals,
+    allDrinks,
+    getAllDrinks,
   } = useContext(SearchContext);
 
   const [ingredients, setIngredients] = useState([]);
@@ -25,7 +25,7 @@ function FoodDetails() {
       const urlNumbers = url.replace(/\D/g, '');
       const urlId = urlNumbers.slice(FOUR, NINE);
       getOneMeal(urlId);
-      getAllMeals();
+      getAllDrinks();
     }
     getMealIdFromUrlAndCallFetch();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,7 +39,7 @@ function FoodDetails() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meal]);
 
-  function handleRender(theMeal, allIngredients, allMeasures, AllMealsParam) {
+  function handleRender(theMeal, allIngredients, allMeasures, AllDrinksParam) {
     const youtubeUrlID = theMeal.strYoutube && theMeal.strYoutube.split('=')[1];
     return (
       <section>
@@ -94,7 +94,7 @@ function FoodDetails() {
           allowFullScreen
         />
         <button data-testid="start-recipe-btn" type="button">Start Recipe</button>
-        <div>{handleRender6Meals(AllMealsParam.meals)}</div>
+        <div>{handleRender6Drinks(AllDrinksParam.drinks)}</div>
       </section>
     );
   }
@@ -102,7 +102,7 @@ function FoodDetails() {
   return (
     <>
       {Object.keys(meal)[0] === 'meals'
-        ? handleRender(meal.meals[0], ingredients, measures, allMeals)
+        ? handleRender(meal.meals[0], ingredients, measures, allDrinks)
         : <p>loading...</p>}
       <p style={ { display: 'none' } }>so para funcionar</p>
     </>

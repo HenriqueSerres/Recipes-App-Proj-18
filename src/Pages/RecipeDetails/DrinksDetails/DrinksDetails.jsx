@@ -4,14 +4,14 @@ import shareIcon from '../../../images/shareIcon.svg';
 import favorite from '../../../images/whiteHeartIcon.svg';
 import getIngredientsArray from '../../../helpers/IngredientsFunc';
 import getIngredientMeasure from '../../../helpers/MeasureFunc';
-import { handleRender6Drinks } from '../../../helpers/HandleDrinkRenders';
+import { handleRender6Meals } from '../../../helpers/HandleFoodRenders';
 
 function DrinksDetails() {
   const {
     drink,
     getOneDrink,
-    allDrinks,
-    getAllDrinks,
+    allMeals,
+    getAllMeals,
   } = useContext(SearchContext);
 
   const [ingredients, setIngredients] = useState([]);
@@ -25,7 +25,7 @@ function DrinksDetails() {
       const urlNumbers = url.replace(/\D/g, '');
       const urlId = urlNumbers.slice(FOUR, TEN);
       getOneDrink(urlId);
-      getAllDrinks();
+      getAllMeals();
     }
     getDrinkIdFromUrlAndCallFetch();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +40,7 @@ function DrinksDetails() {
   }, [drink]);
 
   console.log(drink);
-  function handleRender(oneDrink, allIngredients, allMeasures, AllDrinksParam) {
+  function handleRender(oneDrink, allIngredients, allMeasures, AllMealsParam) {
     return (
       <section>
         <h1 data-testid="recipe-title">{oneDrink.strDrink}</h1>
@@ -87,7 +87,7 @@ function DrinksDetails() {
           <p data-testid="instructions">{oneDrink.strInstructions}</p>
         </article>
         <button data-testid="start-recipe-btn" type="button">Start Recipe</button>
-        <div>{handleRender6Drinks(AllDrinksParam.drinks)}</div>
+        <div>{handleRender6Meals(AllMealsParam.meals)}</div>
       </section>
     );
   }
@@ -95,7 +95,7 @@ function DrinksDetails() {
   return (
     <>
       {Object.keys(drink)[0] === 'drinks'
-        ? handleRender(drink.drinks[0], ingredients, measures, allDrinks)
+        ? handleRender(drink.drinks[0], ingredients, measures, allMeals)
         : <p>loading...</p>}
       <p style={ { display: 'none' } }>so para funcionar, não mostra na tela</p>
     </>
