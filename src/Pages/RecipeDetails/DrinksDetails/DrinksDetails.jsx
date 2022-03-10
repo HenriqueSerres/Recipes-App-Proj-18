@@ -86,8 +86,14 @@ function DrinksDetails() {
           </ul>
           <p data-testid="instructions">{oneDrink.strInstructions}</p>
         </article>
-        <button data-testid="start-recipe-btn" type="button">Start Recipe</button>
         <div>{handleRender6Meals(AllMealsParam.meals)}</div>
+        <button
+          data-testid="start-recipe-btn"
+          type="button"
+          style={ { position: 'fixed', bottom: '0px' } }
+        >
+          Start Recipe
+        </button>
       </section>
     );
   }
