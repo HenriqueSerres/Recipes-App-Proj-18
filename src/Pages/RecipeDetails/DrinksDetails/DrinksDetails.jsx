@@ -20,10 +20,10 @@ function DrinksDetails() {
   useLayoutEffect(() => {
     function getDrinkIdFromUrlAndCallFetch() {
       const FOUR = 4;
-      const NINE = 9;
+      const TEN = 10;
       const url = window.location.href;
       const urlNumbers = url.replace(/\D/g, '');
-      const urlId = urlNumbers.slice(FOUR, NINE);
+      const urlId = urlNumbers.slice(FOUR, TEN);
       getOneDrink(urlId);
       getAllDrinks();
     }
@@ -38,6 +38,7 @@ function DrinksDetails() {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drink]);
+
   console.log(drink);
   function handleRender(oneDrink, allIngredients, allMeasures, AllDrinksParam) {
     return (
@@ -60,7 +61,8 @@ function DrinksDetails() {
             alt="favorite"
           />
         </button>
-        <h3 data-testid="recipe-category">{oneDrink.strCategory}</h3>
+        <h3 data-testid="recipe-category">{oneDrink.strAlcoholic}</h3>
+        <h3>{oneDrink.strCategory}</h3>
         <article>
           <ul>
             { allIngredients.map((ingredient, index) => (
