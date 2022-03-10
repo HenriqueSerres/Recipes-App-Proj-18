@@ -9,7 +9,10 @@ import {
   fetchFoodCateg,
   fetchDrinkCateg,
   fetchFoodCategRecipes,
-  fetchDrinkCategRecipes } from '../services/Api';
+  fetchDrinkCategRecipes,
+  fetchOneMealById,
+  fetchOneDrinkById,
+} from '../services/Api';
 
 export const SearchContext = createContext();
 SearchContext.displayName = 'Search'; // isso aqui serve para aparecer com o nome correto na extenção do navegador para context
@@ -22,6 +25,8 @@ export function SearchProvider({ children }) {
   const [foodCategs, setFoodCategs] = useState([]);
   const [drinkCategs, setDrinkCategs] = useState([]);
   const [toggleCateg, setToggleCateg] = useState('');
+  const [meal, setMeal] = useState([]);
+  const [drink, setDrink] = useState([]);
 
   const error = 'Sorry, we haven\'t found any recipes for these filters.';
 
@@ -94,6 +99,20 @@ export function SearchProvider({ children }) {
     }
   }
 
+  async function getOneMeal(mealIde) {
+    if (mealIde !== undefined) {
+      const result = await fetchOneMealById(mealIde);
+      setMeal(result);
+    }
+  }
+
+  async function getOneDrink(drinkIde) {
+    if (drinkIde !== undefined) {
+      const result = await fetchOneDrinkById(drinkIde);
+      setDrink(result);
+    }
+  }
+
   const context = {
     SearchByIngredient,
     SearchByName,
@@ -112,6 +131,10 @@ export function SearchProvider({ children }) {
     SearchDrinkRecipeByCategory,
     toggleCateg,
     setToggleCateg,
+    meal,
+    getOneMeal,
+    drink,
+    getOneDrink,
   };
 
   return (
@@ -122,5 +145,5 @@ export function SearchProvider({ children }) {
 }
 
 SearchProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.any).isRequired,
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
 };
