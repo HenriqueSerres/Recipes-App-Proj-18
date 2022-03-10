@@ -10,7 +10,6 @@ export { default as Nationalities } from './Nationalities/Nationalities';
 export { default as Profile } from './Profile/Profile';
 export { default as Done } from './Done/Done';
 export { default as Favorite } from './Favorite/Favorite';
-export { default as RecipeDetails } from './RecipeDetails/RecipeDetails';
 export { default as FoodDetails } from './RecipeDetails/FoodDetails/FoodDetails';
 export { default as DrinkDetails } from './RecipeDetails/DrinksDetails/DrinksDetails';
 

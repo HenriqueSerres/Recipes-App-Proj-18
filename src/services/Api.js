@@ -60,3 +60,17 @@ export const fetchDrinkCategRecipes = async (category) => {
   const result = await response.json();
   return result;
 };
+
+export const fetchOneMealById = async (mealId) => {
+  const ENDPOINT = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
+  const response = await fetch(ENDPOINT);
+  const result = await response.json();
+  return result;
+};
+
+export const fetchOneDrinkById = async (drinkId) => {
+  const ENDPOINT = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`;
+  const response = await fetch(ENDPOINT);
+  const result = await response.json();
+  return result;
+};
