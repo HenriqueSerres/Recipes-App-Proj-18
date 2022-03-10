@@ -93,8 +93,14 @@ function FoodDetails() {
           title="recipe video"
           allowFullScreen
         />
-        <button data-testid="start-recipe-btn" type="button">Start Recipe</button>
         <div>{handleRender6Drinks(AllDrinksParam.drinks)}</div>
+        <button
+          data-testid="start-recipe-btn"
+          type="button"
+          style={ { position: 'fixed', bottom: '0px' } }
+        >
+          Start Recipe
+        </button>
       </section>
     );
   }
