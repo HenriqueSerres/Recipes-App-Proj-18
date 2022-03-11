@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Header, Footer, CategButtons } from '../../components';
 import { SearchContext } from '../../context/search';
-import { handleRender12Drinks } from '../../helpers/HandleDrinkRenders';
+import { handleRender12Drinks } from '../../helpers/Render-Functions/HandleDrinkRenders';
 
 function Drinks() {
   const {

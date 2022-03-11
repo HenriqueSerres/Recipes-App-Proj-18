@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Food } from '../components';
+import { Food } from '../../components';
 
 export function handleRender12Meals(array) {
   const TWELVE = 12;

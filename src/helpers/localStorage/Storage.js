@@ -39,16 +39,20 @@ export function handleStorageCompleteRecipes(recipe) {
 export function handleStorageInProgressRecipes(recipe) {
   if (recipe.idDrink !== undefined) {
     const drinkId = recipe.idDrink;
-    const cocktails = {
-      [drinkId]: 'retornar ingrediente conforme é marcado',
+    const drinkStorage = {
+      cocktails: {
+        [drinkId]: 'retornar ingrediente conforme é marcado',
+      },
     };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(cocktails));
+    localStorage.setItem('inProgressRecipes', JSON.stringify(drinkStorage));
   }
   if (recipe.idMeal !== undefined) {
     const mealId = recipe.idMeal;
-    const meals = {
-      [mealId]: 'perguntar na mentoria o que é para retornar aqui',
+    const mealsStorage = {
+      meals: {
+        [mealId]: 'retornar ingrediente conforme é marcado',
+      },
     };
-    localStorage.setItem('inProgressRecipes', JSON.stringify(meals));
+    localStorage.setItem('inProgressRecipes', JSON.stringify(mealsStorage));
   }
 }
