@@ -2,9 +2,11 @@ import React, { useContext, useLayoutEffect, useEffect, useState } from 'react';
 import { SearchContext } from '../../../context/search';
 import shareIcon from '../../../images/shareIcon.svg';
 import favorite from '../../../images/whiteHeartIcon.svg';
-import getIngredientsArray from '../../../helpers/IngredientsFunc';
-import getIngredientMeasure from '../../../helpers/MeasureFunc';
-import { handleRender6Meals } from '../../../helpers/HandleFoodRenders';
+import getIngredientsArray from
+'../../../helpers/Ingredient-Measure-Functions/MeasureFunc';
+import getIngredientMeasure from
+'../../../helpers/Ingredient-Measure-Functions/IngredientsFunc';
+import { handleRender6Meals } from '../../../helpers/Render-Functions/HandleFoodRenders';
 import RecipeButton from '../../../components/RecipeButton/RecipeButton';
 
 function DrinksDetails() {
@@ -40,7 +42,6 @@ function DrinksDetails() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drink]);
 
-  console.log(drink);
   function handleRender(oneDrink, allIngredients, allMeasures, AllMealsParam) {
     return (
       <section>

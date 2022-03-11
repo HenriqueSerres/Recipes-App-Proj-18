@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Header, Footer, CategButtons } from '../../components';
 import { SearchContext } from '../../context/search';
-import { handleRender12Meals } from '../../helpers/HandleFoodRenders';
+import { handleRender12Meals } from '../../helpers/Render-Functions/HandleFoodRenders';
 
 function Foods() {
   const {

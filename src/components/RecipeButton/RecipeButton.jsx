@@ -1,39 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { handleStorageCompleteRecipes } from '../../helpers/localStorage/Storage';
+import { handleStorageInProgressRecipes } from '../../helpers/localStorage/Storage';
+import {
+  handleRecipeInProgressStatus,
+  handleRecipeCompleteStatus,
+} from '../../helpers/Render-Functions/HandleRecipeStatusButton';
 
 export default function RecipeButton({ recipe }) {
-  function handleRecipeStatus(recip) {
-    if (recip.idDrink !== undefined) {
-      const recipeId = JSON.parse(localStorage.getItem('doneRecipes'));
-      if (recipeId) {
-        const doesItIncludes = recipeId.some((recipObj) => recipObj.id === recip.idDrink);
-        return doesItIncludes;
-      }
-      return false;
+  function handleRender(Currentrecipe) {
+    if (handleRecipeInProgressStatus(Currentrecipe) === true) {
+      return 'Continue Recipe';
     }
-    if (recip.idMeal !== undefined) {
-      const recipeId = JSON.parse(localStorage.getItem('doneRecipes'));
-      if (recipeId) {
-        const doesItIncludes = recipeId.some((recipObj) => recipObj.id === recip.idMeal);
-        return doesItIncludes;
-      }
-      return false;
-    }
+    return 'Start Recipe';
   }
+
   return (
     <>
-      { handleRecipeStatus(recipe) === false
+      { handleRecipeCompleteStatus(recipe) === false
         ? (
           <button
             data-testid="start-recipe-btn"
             type="button"
             style={ { position: 'fixed', bottom: '0px' } }
             onClick={ () => {
-              handleStorageCompleteRecipes(recipe);
+              handleStorageInProgressRecipes(recipe);
             } }
           >
-            Start Recipe
+            {handleRender(recipe)}
           </button>) : null}
       <p style={ { display: 'none' } }>so para funcionar</p>
     </>

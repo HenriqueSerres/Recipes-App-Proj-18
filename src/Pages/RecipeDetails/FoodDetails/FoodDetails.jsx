@@ -2,9 +2,12 @@ import React, { useContext, useLayoutEffect, useEffect, useState } from 'react';
 import { SearchContext } from '../../../context/search';
 import shareIcon from '../../../images/shareIcon.svg';
 import favorite from '../../../images/whiteHeartIcon.svg';
-import getIngredientsArray from '../../../helpers/IngredientsFunc';
-import getIngredientMeasure from '../../../helpers/MeasureFunc';
-import { handleRender6Drinks } from '../../../helpers/HandleDrinkRenders';
+import getIngredientsArray from
+'../../../helpers/Ingredient-Measure-Functions/IngredientsFunc';
+import getIngredientMeasure from
+'../../../helpers/Ingredient-Measure-Functions/MeasureFunc';
+import { handleRender6Drinks } from
+'../../../helpers/Render-Functions/HandleDrinkRenders';
 import RecipeButton from '../../../components/RecipeButton/RecipeButton';
 
 function FoodDetails() {
