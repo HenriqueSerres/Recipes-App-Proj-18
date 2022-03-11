@@ -5,7 +5,7 @@ import { Header, Footer } from '../../components';
 function Explore() {
   return (
     <>
-      <Header name="Explore" hasIcons={ false } />
+      <Header name="Explore" hasSearchIcon={ false } hasProfileIcon />
       <div>
         <Link to="/explore/foods">
           <button type="button" data-testid="explore-foods">Explore Foods</button>

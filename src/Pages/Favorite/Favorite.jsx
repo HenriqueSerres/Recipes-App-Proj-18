@@ -4,7 +4,7 @@ import { Header } from '../../components';
 function Favorite() {
   return (
     <>
-      <Header name="Favorite Recipes" hasIcons={ false } />
+      <Header name="Favorite Recipes" hasSearchIcon={ false } hasProfileIcon />
       <div>Recipes</div>
     </>
   );

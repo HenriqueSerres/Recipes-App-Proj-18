@@ -5,6 +5,7 @@ import favorite from '../../../images/whiteHeartIcon.svg';
 import getIngredientsArray from '../../../helpers/IngredientsFunc';
 import getIngredientMeasure from '../../../helpers/MeasureFunc';
 import { handleRender6Meals } from '../../../helpers/HandleFoodRenders';
+import RecipeButton from '../../../components/RecipeButton/RecipeButton';
 
 function DrinksDetails() {
   const {
@@ -87,13 +88,7 @@ function DrinksDetails() {
           <p data-testid="instructions">{oneDrink.strInstructions}</p>
         </article>
         <div>{handleRender6Meals(AllMealsParam.meals)}</div>
-        <button
-          data-testid="start-recipe-btn"
-          type="button"
-          style={ { position: 'fixed', bottom: '0px' } }
-        >
-          Start Recipe
-        </button>
+        <RecipeButton recipe={ oneDrink } />
       </section>
     );
   }

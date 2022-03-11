@@ -18,7 +18,7 @@ function Foods() {
 
   return (
     <>
-      <Header name="Foods" hasIcons />
+      <Header name="Foods" hasSearchIcon hasProfileIcon />
       <CategButtons name="Foods" />
       <main>
         {recipes.meals !== undefined

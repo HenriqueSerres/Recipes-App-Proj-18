@@ -11,7 +11,7 @@ function Profile() {
 
   return (
     <>
-      <Header name="Profile" hasIcons={ false } />
+      <Header name="Profile" hasSearchIcon={ false } hasProfileIcon />
       <div>
         <p data-testid="profile-email">
           { email }

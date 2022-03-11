@@ -18,7 +18,7 @@ function Drinks() {
 
   return (
     <>
-      <Header name="Drinks" hasIcons />
+      <Header name="Drinks" hasSearchIcon hasProfileIcon />
       <CategButtons name="Drinks" />
       <main>
         {recipes.drinks !== undefined

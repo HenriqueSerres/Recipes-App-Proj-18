@@ -4,7 +4,7 @@ import { Header, Footer } from '../../components';
 function Nationalities() {
   return (
     <>
-      <Header name="Explore Nationalities" hasIcons />
+      <Header name="Explore Nationalities" hasSearchIcon hasProfileIcon />
       <div>Recipes</div>
       <Footer />
     </>

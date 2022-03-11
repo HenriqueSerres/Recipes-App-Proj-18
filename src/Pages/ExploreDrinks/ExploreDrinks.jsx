@@ -13,7 +13,7 @@ function ExploreDrinks({ history }) {
 
   return (
     <>
-      <Header name="Explore Drinks" hasIcons={ false } />
+      <Header name="Explore Ingredients" hasSearchIcon={ false } hasProfileIcon />
       <div>
         <Link to="/explore/drinks/ingredients">
           <button
