@@ -1,32 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { handleStorageInProgressRecipes } from '../../helpers/localStorage/Storage';
+import { handleStorageCompleteRecipes } from '../../helpers/localStorage/Storage';
 
 export default function RecipeButton({ recipe }) {
-  function handleRecipeStatus(recipee) {
-    if (recipee.idDrink !== undefined) {
-      const recipeId = localStorage.getItem(recipee.idDrink);
-      const doesItIncludes = recipeId.includes(recipee.idDrink);
-      return doesItIncludes;
+  function handleRecipeStatus(recip) {
+    if (recip.idDrink !== undefined) {
+      const recipeId = JSON.parse(localStorage.getItem('doneRecipes'));
+      if (recipeId) {
+        const doesItIncludes = recipeId.some((recipObj) => recipObj.id === recip.idDrink);
+        return doesItIncludes;
+      }
+      return false;
     }
-    if (recipee.idMeal !== undefined) {
-      console.log('entra', recipee.idMeal);
-      const recipeId = localStorage.getItem('meals'); // porque retorna null se eu to setando o valor com idMeal?
-      console.log('chave da receita', recipeId);
-      const doesItIncludes = recipeId.includes(recipee.idMeal);
-      return doesItIncludes;
+    if (recip.idMeal !== undefined) {
+      const recipeId = JSON.parse(localStorage.getItem('doneRecipes'));
+      if (recipeId) {
+        const doesItIncludes = recipeId.some((recipObj) => recipObj.id === recip.idMeal);
+        return doesItIncludes;
+      }
+      return false;
     }
   }
   return (
     <>
-      { handleRecipeStatus(recipe) === true
+      { handleRecipeStatus(recipe) === false
         ? (
           <button
             data-testid="start-recipe-btn"
             type="button"
             style={ { position: 'fixed', bottom: '0px' } }
             onClick={ () => {
-              handleStorageInProgressRecipes(recipe);
+              handleStorageCompleteRecipes(recipe);
             } }
           >
             Start Recipe

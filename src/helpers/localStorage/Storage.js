@@ -1,7 +1,6 @@
 // import getIngredientsArray from '../IngredientsFunc';
 
 export function handleStorageCompleteRecipes(recipe) {
-  console.log('eh o entry', recipe);
   const today = new Date();
   const todayDate = `${today.getDate()
   }/${today.getMonth() + 1}/${today.getFullYear()}`;
@@ -18,7 +17,7 @@ export function handleStorageCompleteRecipes(recipe) {
       doneData: todayDate,
       tags: recipe.strTags,
     };
-    localStorage.setItem('doneRecipes', JSON.stringify(doneDrinkRecipes));
+    localStorage.setItem('doneRecipes', JSON.stringify([doneDrinkRecipes]));
   }
   if (recipe.idMeal !== undefined) {
     const doneMealRecipes = {
@@ -32,20 +31,16 @@ export function handleStorageCompleteRecipes(recipe) {
       doneData: todayDate,
       tags: recipe.strTags,
     };
-    localStorage.setItem('doneRecipes', JSON.stringify(doneMealRecipes));
+    localStorage.setItem('doneRecipes', JSON.stringify([doneMealRecipes]));
+    console.log('eh o localstorage', doneMealRecipes);
   }
 }
 
 export function handleStorageInProgressRecipes(recipe) {
   if (recipe.idDrink !== undefined) {
     const drinkId = recipe.idDrink;
-    // const ingredients = getIngredientsArray(recipe);
-    // ingredients.map((ingredient) => {
-    //   const Allingred = [];
-    //   return Allingred.push(ingredient);
-    // });
     const cocktails = {
-      [drinkId]: 'perguntar na mentoria o que é para retornar aqui',
+      [drinkId]: 'retornar ingrediente conforme é marcado',
     };
     localStorage.setItem('inProgressRecipes', JSON.stringify(cocktails));
   }
