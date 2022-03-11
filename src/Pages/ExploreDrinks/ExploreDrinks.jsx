@@ -1,8 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Header, Footer } from '../../components';
 
-function ExploreDrinks() {
+function ExploreDrinks({ history }) {
+  const fetchRandomDrink = async () => {
+    const result = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
+    const data = await result.json();
+    const randomId = data.drinks[0].idDrink;
+    history.push(`/drinks/${randomId}`);
+  };
+
   return (
     <>
       <Header name="Explore Drinks" hasIcons={ false } />
@@ -18,6 +26,7 @@ function ExploreDrinks() {
         <button
           type="button"
           data-testid="explore-surprise"
+          onClick={ fetchRandomDrink }
         >
           Surprise me!
         </button>
@@ -26,5 +35,9 @@ function ExploreDrinks() {
     </>
   );
 }
+
+ExploreDrinks.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+};
 
 export default ExploreDrinks;
