@@ -5,6 +5,7 @@ import favorite from '../../../images/whiteHeartIcon.svg';
 import getIngredientsArray from '../../../helpers/IngredientsFunc';
 import getIngredientMeasure from '../../../helpers/MeasureFunc';
 import { handleRender6Drinks } from '../../../helpers/HandleDrinkRenders';
+import RecipeButton from '../../../components/RecipeButton/RecipeButton';
 
 function FoodDetails() {
   const {
@@ -39,15 +40,15 @@ function FoodDetails() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meal]);
 
-  function handleRender(theMeal, allIngredients, allMeasures, AllDrinksParam) {
-    const youtubeUrlID = theMeal.strYoutube && theMeal.strYoutube.split('=')[1];
+  function handleRender(oneMeal, allIngredients, allMeasures, AllDrinksParam) {
+    const youtubeUrlID = oneMeal.strYoutube && oneMeal.strYoutube.split('=')[1];
     return (
       <section>
-        <h1 data-testid="recipe-title">{theMeal.strMeal}</h1>
+        <h1 data-testid="recipe-title">{oneMeal.strMeal}</h1>
         <img
           data-testid="recipe-photo"
-          src={ theMeal.strMealThumb }
-          alt={ theMeal.strMeal }
+          src={ oneMeal.strMealThumb }
+          alt={ oneMeal.strMeal }
         />
         <button type="button" data-testid="share-btn">
           <img
@@ -61,7 +62,7 @@ function FoodDetails() {
             alt="favorite"
           />
         </button>
-        <h3 data-testid="recipe-category">{theMeal.strCategory}</h3>
+        <h3 data-testid="recipe-category">{oneMeal.strCategory}</h3>
         <article>
           <ul>
             { allIngredients.map((ingredient, index) => (
@@ -83,7 +84,7 @@ function FoodDetails() {
               </li>
             ))}
           </ul>
-          <p data-testid="instructions">{theMeal.strInstructions}</p>
+          <p data-testid="instructions">{oneMeal.strInstructions}</p>
         </article>
         <iframe
           data-testid="video"
@@ -94,13 +95,7 @@ function FoodDetails() {
           allowFullScreen
         />
         <div>{handleRender6Drinks(AllDrinksParam.drinks)}</div>
-        <button
-          data-testid="start-recipe-btn"
-          type="button"
-          style={ { position: 'fixed', bottom: '0px' } }
-        >
-          Start Recipe
-        </button>
+        <RecipeButton recipe={ oneMeal } />
       </section>
     );
   }
