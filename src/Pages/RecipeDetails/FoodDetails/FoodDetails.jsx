@@ -20,12 +20,13 @@ function FoodDetails() {
 
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
+  const [message, setMessage] = useState(false);
+  const url = window.location.href;
 
   useLayoutEffect(() => {
     function getMealIdFromUrlAndCallFetch() {
       const FOUR = 4;
       const NINE = 9;
-      const url = window.location.href;
       const urlNumbers = url.replace(/\D/g, '');
       const urlId = urlNumbers.slice(FOUR, NINE);
       getOneMeal(urlId);
@@ -43,6 +44,13 @@ function FoodDetails() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meal]);
 
+  function handleCopy() {
+    const THREE_SEC = 2000;
+    setMessage(true);
+    navigator.clipboard.writeText(url);
+    setTimeout(() => setMessage(false), THREE_SEC);
+  }
+
   function handleRender(oneMeal, allIngredients, allMeasures, AllDrinksParam) {
     const youtubeUrlID = oneMeal.strYoutube && oneMeal.strYoutube.split('=')[1];
     return (
@@ -53,7 +61,8 @@ function FoodDetails() {
           src={ oneMeal.strMealThumb }
           alt={ oneMeal.strMeal }
         />
-        <button type="button" data-testid="share-btn">
+        {message ? <span>Link copied!</span> : null}
+        <button type="button" data-testid="share-btn" onClick={ () => handleCopy() }>
           <img
             src={ shareIcon }
             alt="share"

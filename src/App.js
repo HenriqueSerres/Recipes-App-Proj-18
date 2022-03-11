@@ -16,6 +16,8 @@ import {
   Favorite,
   FoodDetails,
   DrinkDetails,
+  InProgressDrink,
+  InProgressFood,
 } from './Pages';
 import { SearchProvider } from './context/search';
 
@@ -27,9 +29,11 @@ function App() {
       <SearchProvider>
         <Switch>
           <Route exact path="/foods" component={ Foods } />
-          <Route path="/foods/:id" component={ FoodDetails } />
+          <Route exact path="/foods/:id" component={ FoodDetails } />
+          <Route path="/foods/:id/in-progress" component={ InProgressFood } />
           <Route exact path="/drinks" component={ Drinks } />
-          <Route path="/drinks/:id" component={ DrinkDetails } />
+          <Route exact path="/drinks/:id" component={ DrinkDetails } />
+          <Route path="/drinks/:id/in-progress" component={ InProgressDrink } />
           <Route exact path="/explore" component={ Explore } />
           <Route path="/explore/foods" component={ ExploreFoods } />
           <Route path="/explore/drinks" component={ ExploreDrinks } />

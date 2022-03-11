@@ -19,12 +19,13 @@ function DrinksDetails() {
 
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
+  const [message, setMessage] = useState(false);
+  const url = window.location.href;
 
   useLayoutEffect(() => {
     function getDrinkIdFromUrlAndCallFetch() {
       const FOUR = 4;
       const TEN = 10;
-      const url = window.location.href;
       const urlNumbers = url.replace(/\D/g, '');
       const urlId = urlNumbers.slice(FOUR, TEN);
       getOneDrink(urlId);
@@ -42,6 +43,12 @@ function DrinksDetails() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drink]);
 
+  function handleCopy() {
+    const THREE_SEC = 2000;
+    setMessage(true);
+    navigator.clipboard.writeText(url);
+    setTimeout(() => setMessage(false), THREE_SEC);
+  }
   function handleRender(oneDrink, allIngredients, allMeasures, AllMealsParam) {
     return (
       <section>
@@ -51,7 +58,8 @@ function DrinksDetails() {
           src={ oneDrink.strDrinkThumb }
           alt={ oneDrink.strDrink }
         />
-        <button type="button" data-testid="share-btn">
+        {message ? <span>Link copied!</span> : null}
+        <button type="button" data-testid="share-btn" onClick={ () => handleCopy() }>
           <img
             src={ shareIcon }
             alt="share"

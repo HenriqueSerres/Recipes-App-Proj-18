@@ -30,7 +30,6 @@ export function handleRecipeInProgressStatus(recip) {
   if (recip.idMeal !== undefined) {
     const recipeId = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (recipeId) {
-      console.log('meal obj', recipeId);
       const recipeIdOBJValues = Object.keys(recipeId.meals);
       const doesItIncludes = recipeIdOBJValues[0].includes(recip.idMeal);
       return doesItIncludes;
