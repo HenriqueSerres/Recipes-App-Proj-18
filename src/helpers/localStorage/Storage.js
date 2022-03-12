@@ -35,12 +35,12 @@ export function handleStorageCompleteRecipes(recipe) {
   }
 }
 
-export function handleStorageInProgressRecipes(recipe) {
+export function handleStorageInProgressRecipes(recipe, step) {
   if (recipe.idDrink !== undefined) {
     const drinkId = recipe.idDrink;
     const drinkStorage = {
       cocktails: {
-        [drinkId]: 'retornar ingrediente conforme é marcado',
+        [drinkId]: step,
       },
     };
     localStorage.setItem('inProgressRecipes', JSON.stringify(drinkStorage));
@@ -49,7 +49,7 @@ export function handleStorageInProgressRecipes(recipe) {
     const mealId = recipe.idMeal;
     const mealsStorage = {
       meals: {
-        [mealId]: 'retornar ingrediente conforme é marcado',
+        [mealId]: step,
       },
     };
     localStorage.setItem('inProgressRecipes', JSON.stringify(mealsStorage));
