@@ -10,7 +10,9 @@ import getIngredientMeasure from
 '../../../helpers/Ingredient-Measure-Functions/MeasureFunc';
 import {
   handleStorageFavoriteRecipes,
-  handleStorageInProgressRecipes } from '../../../helpers/localStorage/Storage';
+  handleStorageInProgressRecipes,
+  handleStorageCompleteRecipes,
+} from '../../../helpers/localStorage/Storage';
 import { handleRecipeFavoriteStatus, handleRecipeFavoriteRemoval }
 from '../../../helpers/Render-Functions/HandleFavIconRender';
 
@@ -155,7 +157,10 @@ function InProgressFood() {
           data-testid="finish-recipe-btn"
           style={ { position: 'fixed', bottom: '0px' } }
           disabled={ ingredients.length !== checkedSteps.length }
-          onClick={ () => history.push('/done-recipes') }
+          onClick={ () => {
+            handleStorageCompleteRecipes(meal);
+            history.push('/done-recipes');
+          } }
         >
           Finish Recipe
         </button>

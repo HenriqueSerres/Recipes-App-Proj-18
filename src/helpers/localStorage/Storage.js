@@ -4,8 +4,9 @@ export function handleStorageCompleteRecipes(recipe) {
   const today = new Date();
   const todayDate = `${today.getDate()
   }/${today.getMonth() + 1}/${today.getFullYear()}`;
-
-  if (recipe.idDrink !== undefined) {
+  const inProgressRecipe = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  const alreadyDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  if (recipe.idDrink) {
     const doneDrinkRecipes = {
       id: recipe.idDrink,
       type: 'drink',
@@ -17,7 +18,15 @@ export function handleStorageCompleteRecipes(recipe) {
       doneData: todayDate,
       tags: recipe.strTags,
     };
-    localStorage.setItem('doneRecipes', JSON.stringify([...doneDrinkRecipes]));
+    if (alreadyDoneRecipes) {
+      localStorage.setItem(
+        'doneRecipes', JSON.stringify([...alreadyDoneRecipes, doneDrinkRecipes]),
+      );
+      return;
+    }
+    localStorage.setItem('doneRecipes', JSON.stringify([doneDrinkRecipes]));
+    delete inProgressRecipe.cocktails[recipe.idDrink];
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipe));
   }
   if (recipe.idMeal !== undefined) {
     const doneMealRecipes = {
@@ -31,7 +40,15 @@ export function handleStorageCompleteRecipes(recipe) {
       doneData: todayDate,
       tags: recipe.strTags,
     };
-    localStorage.setItem('doneRecipes', JSON.stringify([...doneMealRecipes]));
+    if (alreadyDoneRecipes) {
+      localStorage.setItem(
+        'doneRecipes', JSON.stringify([...alreadyDoneRecipes, doneMealRecipes]),
+      );
+      return;
+    }
+    localStorage.setItem('doneRecipes', JSON.stringify([doneMealRecipes]));
+    delete inProgressRecipe.meals[recipe.idMeal];
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipe));
   }
 }
 
