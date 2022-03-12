@@ -129,7 +129,7 @@ function DrinksDetails() {
         </article>
         <div>{handleRender6Meals(AllMealsParam.meals)}</div>
 
-        <RecipeButton recipe={ oneDrink } />
+        <RecipeButton recipe={ oneDrink } currentUrl={ url } />
       </section>
     );
   }

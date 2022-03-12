@@ -29,6 +29,7 @@ function FoodDetails() {
   const [message, setMessage] = useState(false);
   const [favIcon, setFavIcon] = useState(false);
   const url = window.location.href;
+
   useLayoutEffect(() => {
     function getMealIdFromUrlAndCallFetch() {
       const FOUR = 4;
@@ -142,7 +143,7 @@ function FoodDetails() {
           allowFullScreen
         />
         <div>{handleRender6Drinks(AllDrinksParam.drinks)}</div>
-        <RecipeButton recipe={ oneMeal } url={ url } />
+        <RecipeButton recipe={ oneMeal } currentUrl={ url } />
       </section>
     );
   }

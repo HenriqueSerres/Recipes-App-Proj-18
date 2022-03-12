@@ -38,7 +38,7 @@ export function handleStorageCompleteRecipes(recipe) {
       name: recipe.strMeal,
       image: recipe.strMealThumb,
       doneDate: todayDate,
-      tags: recipe.strTags.split(','),
+      tags: recipe.strTags ? recipe.strTags.split(',') : [],
     };
     if (alreadyDoneRecipes) {
       localStorage.setItem(

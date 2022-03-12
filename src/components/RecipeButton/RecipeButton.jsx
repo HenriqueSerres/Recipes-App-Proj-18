@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { handleStorageInProgressRecipes } from '../../helpers/localStorage/Storage';
@@ -6,8 +6,13 @@ import {
   handleRecipeInProgressStatus,
   handleRecipeCompleteStatus,
 } from '../../helpers/Render-Functions/HandleRecipeStatusButton';
+import { SearchContext } from '../../context/search';
 
-export default function RecipeButton({ recipe }) {
+export default function RecipeButton({ recipe, currentUrl }) {
+  const {
+    setRecipeUrl,
+  } = useContext(SearchContext);
+
   const history = useHistory();
   function handleRender(currentRecipe) {
     if (handleRecipeInProgressStatus(currentRecipe) === true) {
@@ -36,6 +41,7 @@ export default function RecipeButton({ recipe }) {
             onClick={ () => {
               handleStorageInProgressRecipes(recipe);
               handleRedirect(recipe);
+              setRecipeUrl(currentUrl);
             } }
           >
             {handleRender(recipe)}
@@ -47,4 +53,5 @@ export default function RecipeButton({ recipe }) {
 
 RecipeButton.propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  currentUrl: PropTypes.string.isRequired,
 };
