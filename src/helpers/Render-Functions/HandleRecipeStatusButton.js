@@ -20,9 +20,9 @@ export function handleRecipeCompleteStatus(recip) {
 export function handleRecipeInProgressStatus(recip) {
   if (recip.idDrink !== undefined) {
     const recipeId = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (recipeId) {
+    if (recipeId.cocktails) {
       const recipeIdOBJValues = Object.keys(recipeId.cocktails);
-      const doesItIncludes = recipeIdOBJValues[0].includes(recip.idDrink);
+      const doesItIncludes = recipeIdOBJValues.includes(recip.idDrink); // tirar o 0?
       return doesItIncludes;
     }
     return false;
@@ -31,7 +31,7 @@ export function handleRecipeInProgressStatus(recip) {
     const recipeId = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (recipeId) {
       const recipeIdOBJValues = Object.keys(recipeId.meals);
-      const doesItIncludes = recipeIdOBJValues[0].includes(recip.idMeal);
+      const doesItIncludes = recipeIdOBJValues.includes(recip.idMeal);
       return doesItIncludes;
     }
     return false;

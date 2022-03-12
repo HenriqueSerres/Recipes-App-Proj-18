@@ -1,4 +1,5 @@
 import React, { useContext, useLayoutEffect, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { SearchContext } from '../../../context/search';
 import shareIcon from '../../../images/shareIcon.svg';
 import notFavorite from '../../../images/whiteHeartIcon.svg';
@@ -7,7 +8,9 @@ import getIngredientsArray from
 '../../../helpers/Ingredient-Measure-Functions/IngredientsFunc';
 import getIngredientMeasure from
 '../../../helpers/Ingredient-Measure-Functions/MeasureFunc';
-import { handleStorageFavoriteRecipes } from '../../../helpers/localStorage/Storage';
+import {
+  handleStorageFavoriteRecipes,
+  handleStorageInProgressRecipes } from '../../../helpers/localStorage/Storage';
 import { handleRecipeFavoriteStatus, handleRecipeFavoriteRemoval }
 from '../../../helpers/Render-Functions/HandleFavIconRender';
 
@@ -23,7 +26,10 @@ function InProgressFood() {
 
   const [message, setMessage] = useState(false);
   const [favIcon, setFavIcon] = useState(false);
+  const [checkedSteps, setCheckedSteps] = useState([]);
+
   const url = window.location.href;
+  const history = useHistory();
 
   useLayoutEffect(() => {
     function getMealIdFromUrlAndCallFetch() {
@@ -49,7 +55,8 @@ function InProgressFood() {
   function handleCopy() {
     const THREE_SEC = 2000;
     setMessage(true);
-    navigator.clipboard.writeText(url);
+    const correctUrl = url.split('/in-progress');
+    navigator.clipboard.writeText(correctUrl[0]);
     setTimeout(() => setMessage(false), THREE_SEC);
   }
 
@@ -60,6 +67,15 @@ function InProgressFood() {
       return;
     }
     setFavIcon((prevState) => !prevState);
+  }
+
+  function handleStepsArray(e) {
+    const { value } = e.target;
+    if (checkedSteps.some((step) => step === value)) {
+      setCheckedSteps((prevState) => prevState.filter((step) => step !== value));
+      return;
+    }
+    setCheckedSteps((prevState) => [...prevState, value]);
   }
 
   function handleRender(oneDrink, allIngredients, allMeasures) {
@@ -115,6 +131,11 @@ function InProgressFood() {
                   <input
                     id="ingredient"
                     type="checkbox"
+                    value={ `${ingredient}  ${allMeasures[index]}` }
+                    onChange={ (e) => {
+                      handleStepsArray(e);
+                      handleStorageInProgressRecipes(oneDrink, checkedSteps);
+                    } }
                   />
                   {`${ingredient}  ${allMeasures[index]}`}
                 </label>
@@ -127,6 +148,8 @@ function InProgressFood() {
           type="button"
           data-testid="finish-recipe-btn"
           style={ { position: 'fixed', bottom: '0px' } }
+          disabled={ ingredients.length !== checkedSteps.length }
+          onClick={ () => history.push('/done-recipes') }
         >
           Finish Recipe
         </button>
