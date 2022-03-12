@@ -1,13 +1,17 @@
 import React, { useContext, useLayoutEffect, useEffect, useState } from 'react';
 import { SearchContext } from '../../../context/search';
 import shareIcon from '../../../images/shareIcon.svg';
-import favorite from '../../../images/whiteHeartIcon.svg';
+import notFavorite from '../../../images/whiteHeartIcon.svg';
+import isFavorite from '../../../images/blackHeartIcon.svg';
 import getIngredientsArray from
 '../../../helpers/Ingredient-Measure-Functions/MeasureFunc';
 import getIngredientMeasure from
 '../../../helpers/Ingredient-Measure-Functions/IngredientsFunc';
 import { handleRender6Meals } from '../../../helpers/Render-Functions/HandleFoodRenders';
 import RecipeButton from '../../../components/RecipeButton/RecipeButton';
+import { handleStorageFavoriteRecipes } from '../../../helpers/localStorage/Storage';
+import { handleRecipeFavoriteStatus, handleRecipeFavoriteRemoval }
+from '../../../helpers/Render-Functions/HandleFavIconRender';
 
 function DrinksDetails() {
   const {
@@ -20,6 +24,7 @@ function DrinksDetails() {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [message, setMessage] = useState(false);
+  const [favIcon, setFavIcon] = useState(false);
   const url = window.location.href;
 
   useLayoutEffect(() => {
@@ -39,6 +44,7 @@ function DrinksDetails() {
     if (Object.keys(drink)[0] === 'drinks') {
       setIngredients(getIngredientsArray(drink.drinks[0]));
       setMeasures(getIngredientMeasure(drink.drinks[0]));
+      setFavIcon(handleRecipeFavoriteStatus(drink.drinks[0]));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drink]);
@@ -49,6 +55,16 @@ function DrinksDetails() {
     navigator.clipboard.writeText(url);
     setTimeout(() => setMessage(false), THREE_SEC);
   }
+
+  function handleFavIconToggle(oneDrink) {
+    if (favIcon) {
+      handleRecipeFavoriteRemoval(oneDrink.idDrink);
+      setFavIcon((prevState) => !prevState);
+      return;
+    }
+    setFavIcon((prevState) => !prevState);
+  }
+
   function handleRender(oneDrink, allIngredients, allMeasures, AllMealsParam) {
     return (
       <section>
@@ -65,11 +81,26 @@ function DrinksDetails() {
             alt="share"
           />
         </button>
-        <button type="button" data-testid="favorite-btn">
-          <img
-            src={ favorite }
-            alt="favorite"
-          />
+        <button
+          type="button"
+          onClick={ () => {
+            handleStorageFavoriteRecipes(oneDrink);
+            handleFavIconToggle(oneDrink);
+          } }
+        >
+          {favIcon ? (
+            <img
+              src={ isFavorite }
+              alt="favorite"
+              data-testid="favorite-btn"
+            />
+          ) : (
+            <img
+              src={ notFavorite }
+              alt="favorite"
+              data-testid="favorite-btn"
+            />
+          )}
         </button>
         <h3 data-testid="recipe-category">{oneDrink.strAlcoholic}</h3>
         <h3>{oneDrink.strCategory}</h3>

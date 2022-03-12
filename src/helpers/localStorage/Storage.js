@@ -17,7 +17,7 @@ export function handleStorageCompleteRecipes(recipe) {
       doneData: todayDate,
       tags: recipe.strTags,
     };
-    localStorage.setItem('doneRecipes', JSON.stringify([doneDrinkRecipes]));
+    localStorage.setItem('doneRecipes', JSON.stringify([...doneDrinkRecipes]));
   }
   if (recipe.idMeal !== undefined) {
     const doneMealRecipes = {
@@ -31,8 +31,7 @@ export function handleStorageCompleteRecipes(recipe) {
       doneData: todayDate,
       tags: recipe.strTags,
     };
-    localStorage.setItem('doneRecipes', JSON.stringify([doneMealRecipes]));
-    console.log('eh o localstorage', doneMealRecipes);
+    localStorage.setItem('doneRecipes', JSON.stringify([...doneMealRecipes]));
   }
 }
 
@@ -54,5 +53,45 @@ export function handleStorageInProgressRecipes(recipe) {
       },
     };
     localStorage.setItem('inProgressRecipes', JSON.stringify(mealsStorage));
+  }
+}
+
+export function handleStorageFavoriteRecipes(recipe) {
+  const favRecipe = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  console.log('fav cachaça foi chamado');
+  if (recipe.idDrink !== undefined) {
+    console.log('recebeu a id drink', recipe.idDrink);
+    const favoriteDrinkRecipes = {
+      id: recipe.idDrink,
+      type: 'drink',
+      nationality: '',
+      category: recipe.strCategory,
+      alcoholicOrNot: recipe.strAlcoholic,
+      name: recipe.strDrink,
+      image: recipe.strDrinkThumb,
+    };
+    if (favRecipe) {
+      localStorage.setItem('favoriteRecipes',
+        JSON.stringify([...favRecipe, favoriteDrinkRecipes]));
+      return;
+    }
+    localStorage.setItem('favoriteRecipes', JSON.stringify([favoriteDrinkRecipes]));
+  }
+  if (recipe.idMeal !== undefined) {
+    const favorieMealRecipes = {
+      id: recipe.idMeal,
+      type: 'food',
+      nationality: recipe.strArea,
+      category: recipe.strCategory,
+      alcoholicOrNot: '',
+      name: recipe.strMeal,
+      image: recipe.strMealThumb,
+    };
+    if (favRecipe) {
+      localStorage.setItem('favoriteRecipes',
+        JSON.stringify([...favRecipe, favorieMealRecipes]));
+      return;
+    }
+    localStorage.setItem('favoriteRecipes', JSON.stringify([favorieMealRecipes]));
   }
 }
