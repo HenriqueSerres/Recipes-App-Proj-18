@@ -20,10 +20,12 @@ function FoodDetails() {
     getOneMeal,
     allDrinks,
     getAllDrinks,
+    ingredients,
+    setIngredients,
+    measures,
+    setMeasures,
   } = useContext(SearchContext);
 
-  const [ingredients, setIngredients] = useState([]);
-  const [measures, setMeasures] = useState([]);
   const [message, setMessage] = useState(false);
   const [favIcon, setFavIcon] = useState(false);
   const url = window.location.href;
@@ -57,7 +59,6 @@ function FoodDetails() {
   }
 
   function handleFavIconToggle(oneMeal) {
-    console.log('chamou a disgraça da função');
     if (favIcon) {
       handleRecipeFavoriteRemoval(oneMeal.idMeal);
       setFavIcon((prevState) => !prevState);
@@ -141,7 +142,7 @@ function FoodDetails() {
           allowFullScreen
         />
         <div>{handleRender6Drinks(AllDrinksParam.drinks)}</div>
-        <RecipeButton recipe={ oneMeal } />
+        <RecipeButton recipe={ oneMeal } url={ url } />
       </section>
     );
   }

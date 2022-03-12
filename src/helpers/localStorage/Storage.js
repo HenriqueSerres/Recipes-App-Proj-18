@@ -58,9 +58,7 @@ export function handleStorageInProgressRecipes(recipe) {
 
 export function handleStorageFavoriteRecipes(recipe) {
   const favRecipe = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  console.log('fav cachaça foi chamado');
   if (recipe.idDrink !== undefined) {
-    console.log('recebeu a id drink', recipe.idDrink);
     const favoriteDrinkRecipes = {
       id: recipe.idDrink,
       type: 'drink',

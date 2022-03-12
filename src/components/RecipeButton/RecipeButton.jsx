@@ -9,8 +9,8 @@ import {
 
 export default function RecipeButton({ recipe }) {
   const history = useHistory();
-  function handleRender(Currentrecipe) {
-    if (handleRecipeInProgressStatus(Currentrecipe) === true) {
+  function handleRender(currentRecipe) {
+    if (handleRecipeInProgressStatus(currentRecipe) === true) {
       return 'Continue Recipe';
     }
     return 'Start Recipe';

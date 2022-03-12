@@ -128,6 +128,7 @@ function DrinksDetails() {
           <p data-testid="instructions">{oneDrink.strInstructions}</p>
         </article>
         <div>{handleRender6Meals(AllMealsParam.meals)}</div>
+
         <RecipeButton recipe={ oneDrink } />
       </section>
     );

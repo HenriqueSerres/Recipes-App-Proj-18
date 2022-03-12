@@ -27,6 +27,8 @@ export function SearchProvider({ children }) {
   const [toggleCateg, setToggleCateg] = useState('');
   const [meal, setMeal] = useState([]);
   const [drink, setDrink] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]);
 
   const error = 'Sorry, we haven\'t found any recipes for these filters.';
 
@@ -135,6 +137,10 @@ export function SearchProvider({ children }) {
     getOneMeal,
     drink,
     getOneDrink,
+    ingredients,
+    setIngredients,
+    measures,
+    setMeasures,
   };
 
   return (
