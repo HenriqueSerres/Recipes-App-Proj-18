@@ -10,13 +10,13 @@ export function handleStorageCompleteRecipes(recipe) {
     const doneDrinkRecipes = {
       id: recipe.idDrink,
       type: 'drink',
-      nationality: recipe.strArea,
+      nationality: '',
       category: recipe.strCategory,
       alcoholicOrNot: recipe.strAlcoholic,
       name: recipe.strDrink,
       image: recipe.strDrinkThumb,
-      doneData: todayDate,
-      tags: recipe.strTags,
+      doneDate: todayDate,
+      tags: '',
     };
     if (alreadyDoneRecipes) {
       localStorage.setItem(
@@ -37,8 +37,8 @@ export function handleStorageCompleteRecipes(recipe) {
       alcoholicOrNot: '',
       name: recipe.strMeal,
       image: recipe.strMealThumb,
-      doneData: todayDate,
-      tags: recipe.strTags,
+      doneDate: todayDate,
+      tags: recipe.strTags.split(','),
     };
     if (alreadyDoneRecipes) {
       localStorage.setItem(
