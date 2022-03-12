@@ -158,7 +158,7 @@ function InProgressFood() {
           style={ { position: 'fixed', bottom: '0px' } }
           disabled={ ingredients.length !== checkedSteps.length }
           onClick={ () => {
-            handleStorageCompleteRecipes(meal);
+            handleStorageCompleteRecipes(meal.meals[0]);
             history.push('/done-recipes');
           } }
         >
