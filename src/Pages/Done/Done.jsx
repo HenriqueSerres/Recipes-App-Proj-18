@@ -1,20 +1,25 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { Header } from '../../components';
-// import { SearchContext } from '../../context/search';
 import shareIcon from '../../images/shareIcon.svg';
 
 function Done() {
-  // const {
-  //   completedRecipe,
-  // } = useContext(SearchContext);
   const [allDoneRecipes, setAllRecipes] = useState([]);
+  const [message, setMessage] = useState(false);
 
   useLayoutEffect(() => {
     setAllRecipes(JSON.parse(localStorage.getItem('doneRecipes')));
   }, []);
-  console.log('como vem as recipes', allDoneRecipes);
-  function handleRender(allRecipes) {
-    console.log('chama a func', allRecipes);
+
+  function handleCopy(id, type) {
+    const THREE_SEC = 2000;
+    setMessage(true);
+    const url = window.location.href.split('done-recipes');
+    const recipeUrl = `${url[0]}${type}s/${id}`;
+    navigator.clipboard.writeText(recipeUrl);
+    setTimeout(() => setMessage(false), THREE_SEC);
+  }
+
+  function handleRender() {
     return (
       <>
         <nav>
@@ -40,8 +45,12 @@ function Done() {
               </h4>
               <h2 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h2>
               <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
+              {message ? <span>Link copied!</span> : null}
               <button
                 type="button"
+                onClick={ () => {
+                  handleCopy(recipe.id, recipe.type);
+                } }
               >
                 <img
                   data-testid={ `${index}-horizontal-share-btn` }
@@ -65,7 +74,7 @@ function Done() {
   return (
     <>
       <Header name="Done Recipes" hasSearchIcon={ false } hasProfileIcon />
-      { allDoneRecipes ? handleRender(allDoneRecipes) : <p>carregando</p>}
+      { allDoneRecipes ? handleRender() : <p>carregando</p>}
     </>
   );
 }

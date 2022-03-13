@@ -29,6 +29,7 @@ export function SearchProvider({ children }) {
   const [drink, setDrink] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
+  const [recipeUrl, setRecipeUrl] = useState('');
 
   const error = 'Sorry, we haven\'t found any recipes for these filters.';
 
@@ -141,6 +142,8 @@ export function SearchProvider({ children }) {
     setIngredients,
     measures,
     setMeasures,
+    recipeUrl,
+    setRecipeUrl,
   };
 
   return (
