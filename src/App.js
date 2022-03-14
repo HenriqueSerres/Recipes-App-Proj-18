@@ -18,6 +18,7 @@ import {
   DrinkDetails,
   InProgressDrink,
   InProgressFood,
+  NotFound,
 } from './Pages';
 import { SearchProvider } from './context/search';
 
@@ -30,19 +31,25 @@ function App() {
         <Switch>
           <Route exact path="/foods" component={ Foods } />
           <Route exact path="/foods/:id" component={ FoodDetails } />
-          <Route path="/foods/:id/in-progress" component={ InProgressFood } />
+          <Route exact path="/foods/:id/in-progress" component={ InProgressFood } />
           <Route exact path="/drinks" component={ Drinks } />
           <Route exact path="/drinks/:id" component={ DrinkDetails } />
-          <Route path="/drinks/:id/in-progress" component={ InProgressDrink } />
+          <Route exact path="/drinks/:id/in-progress" component={ InProgressDrink } />
           <Route exact path="/explore" component={ Explore } />
-          <Route path="/explore/foods" component={ ExploreFoods } />
-          <Route path="/explore/drinks" component={ ExploreDrinks } />
-          <Route path="/explore/foods/ingredients" component={ FoodsIngredients } />
-          <Route path="/explore/drinks/ingredients" component={ DrinksIngredients } />
-          <Route path="/explore/foods/nationalities" component={ Nationalities } />
-          <Route path="/profile" component={ Profile } />
-          <Route path="/done-recipes" component={ Done } />
-          <Route path="/favorite-recipes" component={ Favorite } />
+          <Route exact path="/explore/foods" component={ ExploreFoods } />
+          <Route exact path="/explore/drinks" component={ ExploreDrinks } />
+          <Route exact path="/explore/foods/ingredients" component={ FoodsIngredients } />
+          <Route
+            exact
+            path="/explore/drinks/ingredients"
+            component={ DrinksIngredients }
+          />
+          <Route exact path="/explore/foods/nationalities" component={ Nationalities } />
+          <Route exact path="/explore/drinks/nationalities" component={ NotFound } />
+
+          <Route exact path="/profile" component={ Profile } />
+          <Route exact path="/done-recipes" component={ Done } />
+          <Route exact path="/favorite-recipes" component={ Favorite } />
         </Switch>
       </SearchProvider>
 

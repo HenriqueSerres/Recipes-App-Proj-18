@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Food } from '../../components';
 
-export function handleRender12Meals(array) {
+export function handleRender12Meals(array, xablau) {
+  console.log(xablau);
   const TWELVE = 12;
   if (array !== undefined) {
     return array.map((meal, index) => {
