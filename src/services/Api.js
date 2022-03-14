@@ -74,3 +74,17 @@ export const fetchOneDrinkById = async (drinkId) => {
   const result = await response.json();
   return result;
 };
+
+export const fetchAllNations = async () => {
+  const ENDPOINT = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
+  const response = await fetch(ENDPOINT);
+  const result = await response.json();
+  return result.meals;
+};
+
+export const fetchFoodByNatinonalitie = async (nationalitie) => {
+  const ENDPOINT = `www.themealdb.com/api/json/v1/1/filter.php?a=${nationalitie}`;
+  const response = await fetch(ENDPOINT);
+  const result = await response.json();
+  return result.meals;
+};
