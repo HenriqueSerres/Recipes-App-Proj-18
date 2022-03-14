@@ -82,8 +82,9 @@ export const fetchAllNations = async () => {
   return result.meals;
 };
 
-export const fetchFoodByNatinonalitie = async (nationalitie) => {
-  const ENDPOINT = `www.themealdb.com/api/json/v1/1/filter.php?a=${nationalitie}`;
+export const fetchFoodByNationalitie = async (nationalitie) => {
+  const ENDPOINT = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${nationalitie}`;
+  console.log(ENDPOINT);
   const response = await fetch(ENDPOINT);
   const result = await response.json();
   return result.meals;
