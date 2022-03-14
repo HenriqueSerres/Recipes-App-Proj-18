@@ -1,8 +1,7 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { Header, Footer, CategButtons } from '../../components';
 import { SearchContext } from '../../context/search';
-import Food from './Food/Food';
+import { handleRender12Meals } from '../../helpers/Render-Functions/HandleFoodRenders';
 
 function Foods() {
   const {
@@ -11,41 +10,21 @@ function Foods() {
     getAllMeals,
     toggleCateg,
   } = useContext(SearchContext);
-  const TWELVE = 12;
 
   useEffect(() => {
     getAllMeals();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // se eu coloco a dependencia, ele entra em um loop infinito, não mexer.
 
-  function handleRender(array) {
-    if (array !== undefined) {
-      return array.map((meal, index) => {
-        if (index < TWELVE) {
-          return (
-            <Link to={ `/foods/${meal.idMeal}` }>
-              <Food
-                meal={ meal }
-                key={ meal.idMeal }
-                index={ index }
-              />
-            </Link>
-          );
-        }
-        return null;
-      });
-    }
-  }
-
   return (
     <>
-      <Header name="Foods" hasIcons />
+      <Header name="Foods" hasSearchIcon hasProfileIcon />
       <CategButtons name="Foods" />
       <main>
         {recipes.meals !== undefined
         && recipes.meals.length >= 1
-        && toggleCateg.length > 0 ? handleRender(recipes.meals)
-          : handleRender(allMeals.meals)}
+        && toggleCateg.length > 0 ? handleRender12Meals(recipes.meals)
+          : handleRender12Meals(allMeals.meals)}
 
       </main>
       <Footer />

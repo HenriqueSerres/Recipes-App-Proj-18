@@ -1,42 +1,47 @@
 import React, { useContext, useLayoutEffect, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { SearchContext } from '../../../context/search';
 import shareIcon from '../../../images/shareIcon.svg';
 import notFavorite from '../../../images/whiteHeartIcon.svg';
 import isFavorite from '../../../images/blackHeartIcon.svg';
 import getIngredientsArray from
-'../../../helpers/Ingredient-Measure-Functions/MeasureFunc';
-import getIngredientMeasure from
 '../../../helpers/Ingredient-Measure-Functions/IngredientsFunc';
-import { handleRender6Meals } from '../../../helpers/Render-Functions/HandleFoodRenders';
-import RecipeButton from '../../../components/RecipeButton/RecipeButton';
-import { handleStorageFavoriteRecipes } from '../../../helpers/localStorage/Storage';
+import getIngredientMeasure from
+'../../../helpers/Ingredient-Measure-Functions/MeasureFunc';
+import {
+  handleStorageFavoriteRecipes,
+  handleStorageInProgressRecipes,
+  handleStorageCompleteRecipes,
+} from '../../../helpers/localStorage/Storage';
 import { handleRecipeFavoriteStatus, handleRecipeFavoriteRemoval }
 from '../../../helpers/Render-Functions/HandleFavIconRender';
 
-function DrinksDetails() {
+function InProgressFood() {
   const {
     drink,
     getOneDrink,
-    allMeals,
-    getAllMeals,
+    ingredients,
+    setIngredients,
+    measures,
+    setMeasures,
   } = useContext(SearchContext);
 
-  const [ingredients, setIngredients] = useState([]);
-  const [measures, setMeasures] = useState([]);
   const [message, setMessage] = useState(false);
   const [favIcon, setFavIcon] = useState(false);
+  const [checkedSteps, setCheckedSteps] = useState([]);
+
   const url = window.location.href;
+  const history = useHistory();
 
   useLayoutEffect(() => {
-    function getDrinkIdFromUrlAndCallFetch() {
+    function getMealIdFromUrlAndCallFetch() {
       const FOUR = 4;
       const TEN = 10;
       const urlNumbers = url.replace(/\D/g, '');
       const urlId = urlNumbers.slice(FOUR, TEN);
       getOneDrink(urlId);
-      getAllMeals();
     }
-    getDrinkIdFromUrlAndCallFetch();
+    getMealIdFromUrlAndCallFetch();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -52,7 +57,8 @@ function DrinksDetails() {
   function handleCopy() {
     const THREE_SEC = 2000;
     setMessage(true);
-    navigator.clipboard.writeText(url);
+    const correctUrl = url.split('/in-progress');
+    navigator.clipboard.writeText(correctUrl[0]);
     setTimeout(() => setMessage(false), THREE_SEC);
   }
 
@@ -65,7 +71,16 @@ function DrinksDetails() {
     setFavIcon((prevState) => !prevState);
   }
 
-  function handleRender(oneDrink, allIngredients, allMeasures, AllMealsParam) {
+  function handleStepsArray(e) {
+    const { value } = e.target;
+    if (checkedSteps.some((step) => step === value)) {
+      setCheckedSteps((prevState) => prevState.filter((step) => step !== value));
+      return;
+    }
+    setCheckedSteps((prevState) => [...prevState, value]);
+  }
+
+  function handleRender(oneDrink, allIngredients, allMeasures) {
     return (
       <section>
         <h1 data-testid="recipe-title">{oneDrink.strDrink}</h1>
@@ -75,7 +90,11 @@ function DrinksDetails() {
           alt={ oneDrink.strDrink }
         />
         {message ? <span>Link copied!</span> : null}
-        <button type="button" data-testid="share-btn" onClick={ () => handleCopy() }>
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ () => handleCopy() }
+        >
           <img
             src={ shareIcon }
             alt="share"
@@ -102,46 +121,54 @@ function DrinksDetails() {
             />
           )}
         </button>
-        <h3 data-testid="recipe-category">{oneDrink.strAlcoholic}</h3>
-        <h3>{oneDrink.strCategory}</h3>
+        <h3 data-testid="recipe-category">{oneDrink.strCategory}</h3>
         <article>
           <ul>
             { allIngredients.map((ingredient, index) => (
-              <li
-                data-testid={ `${index}-ingredient-name-and-measure` }
-                key={ index }
-              >
-                {ingredient}
-              </li>
-            ))}
-          </ul>
-          <ul>
-            { allMeasures.map((measure, index) => (
-              <li
-                data-testid={ `${index}-ingredient-name-and-measure` }
-                key={ index }
-              >
-                {measure}
+              <li key={ index }>
+                <label
+                  data-testid={ `data-testid=${index}-ingredient-step` }
+                  htmlFor="ingredient"
+                >
+                  <input
+                    id="ingredient"
+                    type="checkbox"
+                    value={ `${ingredient}  ${allMeasures[index]}` }
+                    onChange={ (e) => {
+                      handleStepsArray(e);
+                      handleStorageInProgressRecipes(oneDrink, checkedSteps);
+                    } }
+                  />
+                  {`${ingredient}  ${allMeasures[index]}`}
+                </label>
               </li>
             ))}
           </ul>
           <p data-testid="instructions">{oneDrink.strInstructions}</p>
         </article>
-        <div>{handleRender6Meals(AllMealsParam.meals)}</div>
-
-        <RecipeButton recipe={ oneDrink } currentUrl={ url } />
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          style={ { position: 'fixed', bottom: '0px' } }
+          disabled={ ingredients.length !== checkedSteps.length }
+          onClick={ () => {
+            handleStorageCompleteRecipes(drink.drinks[0]);
+            history.push('/done-recipes');
+          } }
+        >
+          Finish Recipe
+        </button>
       </section>
     );
   }
-
   return (
     <>
       {Object.keys(drink)[0] === 'drinks'
-        ? handleRender(drink.drinks[0], ingredients, measures, allMeals)
+        ? handleRender(drink.drinks[0], ingredients, measures)
         : <p>loading...</p>}
-      <p style={ { display: 'none' } }>so para funcionar, não mostra na tela</p>
+      <p style={ { display: 'none' } }>so para funcionar</p>
     </>
   );
 }
 
-export default DrinksDetails;
+export default InProgressFood;

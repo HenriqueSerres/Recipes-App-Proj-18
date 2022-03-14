@@ -1,4 +1,5 @@
 import React, { useContext, useLayoutEffect, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { SearchContext } from '../../../context/search';
 import shareIcon from '../../../images/shareIcon.svg';
 import notFavorite from '../../../images/whiteHeartIcon.svg';
@@ -7,19 +8,18 @@ import getIngredientsArray from
 '../../../helpers/Ingredient-Measure-Functions/IngredientsFunc';
 import getIngredientMeasure from
 '../../../helpers/Ingredient-Measure-Functions/MeasureFunc';
-import { handleRender6Drinks } from
-'../../../helpers/Render-Functions/HandleDrinkRenders';
-import RecipeButton from '../../../components/RecipeButton/RecipeButton';
-import { handleStorageFavoriteRecipes } from '../../../helpers/localStorage/Storage';
+import {
+  handleStorageFavoriteRecipes,
+  handleStorageInProgressRecipes,
+  handleStorageCompleteRecipes,
+} from '../../../helpers/localStorage/Storage';
 import { handleRecipeFavoriteStatus, handleRecipeFavoriteRemoval }
 from '../../../helpers/Render-Functions/HandleFavIconRender';
 
-function FoodDetails() {
+function InProgressFood() {
   const {
     meal,
     getOneMeal,
-    allDrinks,
-    getAllDrinks,
     ingredients,
     setIngredients,
     measures,
@@ -28,7 +28,10 @@ function FoodDetails() {
 
   const [message, setMessage] = useState(false);
   const [favIcon, setFavIcon] = useState(false);
+  const [checkedSteps, setCheckedSteps] = useState([]);
+
   const url = window.location.href;
+  const history = useHistory();
 
   useLayoutEffect(() => {
     function getMealIdFromUrlAndCallFetch() {
@@ -37,7 +40,6 @@ function FoodDetails() {
       const urlNumbers = url.replace(/\D/g, '');
       const urlId = urlNumbers.slice(FOUR, NINE);
       getOneMeal(urlId);
-      getAllDrinks();
     }
     getMealIdFromUrlAndCallFetch();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,10 +54,17 @@ function FoodDetails() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [meal]);
 
+  // useEffect(() => {
+  //   console.log('useEffect foi chamado', checkedSteps);
+  //   handleStorageInProgressRecipes(meal, checkedSteps);
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [checkedSteps]); atualiza o estado mas não manda corretamente para o storage
+
   function handleCopy() {
     const THREE_SEC = 2000;
     setMessage(true);
-    navigator.clipboard.writeText(url);
+    const correctUrl = url.split('/in-progress');
+    navigator.clipboard.writeText(correctUrl[0]);
     setTimeout(() => setMessage(false), THREE_SEC);
   }
 
@@ -68,8 +77,16 @@ function FoodDetails() {
     setFavIcon((prevState) => !prevState);
   }
 
-  function handleRender(oneMeal, allIngredients, allMeasures, AllDrinksParam) {
-    const youtubeUrlID = oneMeal.strYoutube && oneMeal.strYoutube.split('=')[1];
+  function handleStepsArray(e) {
+    const { value } = e.target;
+    if (checkedSteps.some((step) => step === value)) {
+      setCheckedSteps((prevState) => prevState.filter((step) => step !== value));
+      return;
+    }
+    setCheckedSteps((prevState) => [...prevState, value]);
+  }
+
+  function handleRender(oneMeal, allIngredients, allMeasures) {
     return (
       <section>
         <h1 data-testid="recipe-title">{oneMeal.strMeal}</h1>
@@ -114,48 +131,50 @@ function FoodDetails() {
         <article>
           <ul>
             { allIngredients.map((ingredient, index) => (
-              <li
-                data-testid={ `${index}-ingredient-name-and-measure` }
-                key={ index }
-              >
-                {ingredient}
-              </li>
-            ))}
-          </ul>
-          <ul>
-            { allMeasures.map((measure, index) => (
-              <li
-                data-testid={ `${index}-ingredient-name-and-measure` }
-                key={ index }
-              >
-                {measure}
+              <li key={ index }>
+                <label
+                  htmlFor="ingredient"
+                  data-testid={ `data-testid=${index}-ingredient-step` }
+                >
+                  <input
+                    id="ingredient"
+                    type="checkbox"
+                    value={ `${ingredient}  ${allMeasures[index]}` }
+                    onChange={ (e) => {
+                      handleStepsArray(e);
+                      handleStorageInProgressRecipes(oneMeal, checkedSteps); // Está funcionando pero no mucho, não dá tempo de atualizar o estado do passo mas está setando ok, e o use effect n funciona.
+                    } }
+                  />
+                  {`${ingredient}  ${allMeasures[index]}`}
+                </label>
               </li>
             ))}
           </ul>
           <p data-testid="instructions">{oneMeal.strInstructions}</p>
         </article>
-        <iframe
-          data-testid="video"
-          height="500px"
-          width="500px"
-          src={ `https://www.youtube.com/embed/${youtubeUrlID || ''}` }
-          title="recipe video"
-          allowFullScreen
-        />
-        <div>{handleRender6Drinks(AllDrinksParam.drinks)}</div>
-        <RecipeButton recipe={ oneMeal } currentUrl={ url } />
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          style={ { position: 'fixed', bottom: '0px' } }
+          disabled={ ingredients.length !== checkedSteps.length }
+          onClick={ () => {
+            handleStorageCompleteRecipes(meal.meals[0]);
+            history.push('/done-recipes');
+          } }
+        >
+          Finish Recipe
+        </button>
       </section>
     );
   }
-
   return (
     <>
       {Object.keys(meal)[0] === 'meals'
-        ? handleRender(meal.meals[0], ingredients, measures, allDrinks)
+        ? handleRender(meal.meals[0], ingredients, measures)
         : <p>loading...</p>}
       <p style={ { display: 'none' } }>so para funcionar</p>
     </>
   );
 }
 
-export default FoodDetails;
+export default InProgressFood;

@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import SearchBar from '../SearchBar/SearchBar';
 
-function Header({ name, hasIcons }) {
+function Header({ name, hasSearchIcon, hasProfileIcon }) {
   const [showBar, setShowBar] = useState(false);
+  const history = useHistory();
   return (
     <>
-      <Link
-        to="/profile"
-      >
-        <img src={ profileIcon } alt="profile" data-testid="profile-top-btn" />
-      </Link>
+      {hasProfileIcon ? (
+        <button
+          type="button"
+          onClick={ () => history.push('/profile') }
+        >
+          <img src={ profileIcon } alt="profile" data-testid="profile-top-btn" />
+        </button>) : null }
       <h1 data-testid="page-title">{name}</h1>
-      { hasIcons ? (
+      { hasSearchIcon ? (
         <button
           type="button"
           onClick={ () => setShowBar(!showBar) }
@@ -35,7 +38,8 @@ function Header({ name, hasIcons }) {
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,
-  hasIcons: PropTypes.bool.isRequired,
+  hasSearchIcon: PropTypes.bool.isRequired,
+  hasProfileIcon: PropTypes.bool.isRequired,
 };
 
 export default Header;

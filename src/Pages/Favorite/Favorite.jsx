@@ -5,11 +5,9 @@ function Favorite() {
   const [saveRecipes, setsaveRecipes] = useState([]);
   return (
     <section>
-      <Header name="Favorite Recipes" hasIcons={ false } />
+      <Header name="Favorite Recipes" hasSearchIcon={ false } hasProfileIcon />
 
       <ButtonFavorites />
-
-      <div>Recipes</div>
 
     </section>
   );

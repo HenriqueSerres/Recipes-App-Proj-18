@@ -14,7 +14,10 @@ import {
   Profile,
   Done,
   Favorite,
-  // RecipeDetails, comentando porque sem rota ele dá erro!
+  FoodDetails,
+  DrinkDetails,
+  InProgressDrink,
+  InProgressFood,
 } from './Pages';
 import { SearchProvider } from './context/search';
 
@@ -22,11 +25,15 @@ function App() {
   // O EXACT só precisa estar no caminho raíz
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={ Login } />
-        <SearchProvider>
-          <Route path="/foods" component={ Foods } />
-          <Route path="/drinks" component={ Drinks } />
+      <Route exact path="/" component={ Login } />
+      <SearchProvider>
+        <Switch>
+          <Route exact path="/foods" component={ Foods } />
+          <Route exact path="/foods/:id" component={ FoodDetails } />
+          <Route path="/foods/:id/in-progress" component={ InProgressFood } />
+          <Route exact path="/drinks" component={ Drinks } />
+          <Route exact path="/drinks/:id" component={ DrinkDetails } />
+          <Route path="/drinks/:id/in-progress" component={ InProgressDrink } />
           <Route exact path="/explore" component={ Explore } />
           <Route path="/explore/foods" component={ ExploreFoods } />
           <Route path="/explore/drinks" component={ ExploreDrinks } />
@@ -36,9 +43,9 @@ function App() {
           <Route path="/profile" component={ Profile } />
           <Route path="/done-recipes" component={ Done } />
           <Route path="/favorite-recipes" component={ Favorite } />
-        </SearchProvider>
+        </Switch>
+      </SearchProvider>
 
-      </Switch>
     </BrowserRouter>
   );
 }
