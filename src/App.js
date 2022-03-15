@@ -46,13 +46,11 @@ function App() {
           />
           <Route exact path="/explore/foods/nationalities" component={ Nationalities } />
           <Route exact path="/explore/drinks/nationalities" component={ NotFound } />
-
           <Route exact path="/profile" component={ Profile } />
           <Route exact path="/done-recipes" component={ Done } />
           <Route exact path="/favorite-recipes" component={ Favorite } />
         </Switch>
       </SearchProvider>
-
     </BrowserRouter>
   );
 }
