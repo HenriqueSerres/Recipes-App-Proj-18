@@ -1,13 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { Header } from '../../components';
+import { handleRecipeFavoriteRemoval }
+from '../../helpers/Render-Functions/HandleFavIconRender';
+import shareIcon from '../../images/shareIcon.svg';
+import notFavorite from '../../images/whiteHeartIcon.svg';
+import isFavorite from '../../images/blackHeartIcon.svg';
 
 function Favorite() {
   const [foodList, setFoodList] = useState([]);
+  const [favIcon, setFavIcon] = useState(true);
+  const [message, setMessage] = useState(false);
+  const url = window.location.href;
 
   useEffect(() => {
     setFoodList(JSON.parse(localStorage.getItem('favoriteRecipes')));
   }, []);
 
+  useEffect(() => {
+    setFoodList(JSON.parse(localStorage.getItem('favoriteRecipes')));
+  }, [localStorage.getItem('favoriteRecipes')]);
+
+  function handleFavIconToggle(id) {
+    if (favIcon) {
+      handleRecipeFavoriteRemoval(id);
+      setFavIcon((prevState) => !prevState);
+      return;
+    }
+    setFavIcon((prevState) => !prevState);
+  }
+  function handleCopy() {
+    const THREE_SEC = 2000;
+    setMessage(true);
+    navigator.clipboard.writeText(url);
+    setTimeout(() => setMessage(false), THREE_SEC);
+  }
   console.log(foodList);
   // const [saveRecipes, setsaveRecipes] = useState([]);
   return (
@@ -41,28 +67,44 @@ function Favorite() {
                 <h2
                   data-testid={ `${index}-horizontal-top-text` }
                 >
-                  {iten.category}
-
+                  {`${iten.nationality} - ${iten.category}`}
                 </h2>
 
               </section>
               <section>
+                {message ? <span>Link copied!</span> : null}
                 <button
-                  data-testid={ `${index}-horizontal-share-btn` }
                   type="button"
+                  onClick={ () => handleCopy() }
                 >
-                  share
+                  <img
+                    data-testid={ `${index}-horizontal-share-btn` }
+                    src={ shareIcon }
+                    alt="share"
+                  />
                 </button>
                 <button
-                  data-testid={ `${index}-horizontal-favorite-btn` }
                   type="button"
+                  onClick={ () => handleFavIconToggle(iten.id) }
                 >
-                  favorito
+                  {favIcon ? (
+                    <img
+                      src={ isFavorite }
+                      alt="favorite"
+                      data-testid={ `${index}-horizontal-favorite-btn` }
+                    />
+                  ) : (
+                    <img
+                      src={ notFavorite }
+                      alt="favorite"
+                      data-testid={ `${index}-horizontal-favorite-btn` }
+                    />
+                  )}
                 </button>
               </section>
             </div>
           )))
-          : null }
+          : (<p>Não há itens favoritados</p>) }
       </div>
     </section>
   );
